@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: codesphere-web
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:4000/api
+      - NEXT_PUBLIC_SOCKET_URL=http://localhost:4000
+    depends_on:
+      - api
+
+  api:
+    build:
+      context: ./services/api
+      dockerfile: Dockerfile
+    container_name: codesphere-api
+    restart: always
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - MONGODB_URI=mongodb://mongo:27017/codesphere
+      - REDIS_URL=redis://redis:6379
+      - AI_ENGINE_URL=http://ai-engine:8000
+      - JWT_SECRET=codesphere_production_super_secret_jwt_2026
+    volumes:
+      - git_storage:/storage/repos
+      - api_data:/storage/data
+    depends_on:
+      - mongo
+      - redis
+      - ai-engine
+
+  ai-engine:
+    build:
+      context: ./services/ai-engine
+      dockerfile: Dockerfile
+    container_name: codesphere-ai-engine
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - git_storage:/storage/repos:ro
+
+  mongo:
+    image: mongo:7.0
+    container_name: codesphere-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: codesphere-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  git_storage:
+  api_data:
+  mongo_data:
+  redis_data:
