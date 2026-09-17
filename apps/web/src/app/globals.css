@@ -15,10 +15,22 @@
 
 body {
   background-color: #050806;
+  background-image: 
+    radial-gradient(ellipse 90% 50% at 50% -5%, rgba(16, 185, 129, 0.45) 0%, transparent 60%),
+    radial-gradient(ellipse 110% 75% at 50% 0%, #07523f 0%, #043325 35%, #021a12 65%, #050806 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   color: #f0f7f2;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
   letter-spacing: -0.011em;
+  min-height: 100vh;
+}
+
+/* Allow full-page containers to let the ambient greenish background shine through */
+.min-h-screen.bg-\[\#050806\],
+div[class*="min-h-screen"][class*="bg-\[\#050806\]"] {
+  background-color: transparent !important;
 }
 
 /* Linear/Vercel Custom Scrollbar */
@@ -104,5 +116,44 @@ body {
 
 .animate-fadeIn {
   animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pulseSlow {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1) translateX(-50%);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.05) translateX(-50%);
+  }
+}
+
+@keyframes auroraFloat {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(35px, -25px) scale(1.08);
+  }
+  100% {
+    transform: translate(-20px, 15px) scale(0.95);
+  }
+}
+
+@keyframes auroraFloat2 {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(-30px, 25px) scale(1.1);
+  }
+  100% {
+    transform: translate(20px, -15px) scale(0.94);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 9s ease-in-out infinite;
 }
 

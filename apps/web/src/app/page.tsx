@@ -85,7 +85,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050806] text-[#f0f7f2] flex flex-col selection:bg-emerald-500/25 selection:text-emerald-200">
+    <div className="min-h-screen bg-transparent text-[#f0f7f2] flex flex-col selection:bg-emerald-500/25 selection:text-emerald-200">
       <Navbar onOpenSearch={() => setIsCommandOpen(true)} />
       <CommandPalette isOpen={isCommandOpen} onClose={() => setIsCommandOpen(false)} />
 
