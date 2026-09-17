@@ -25,7 +25,7 @@ export default function NewPullRequestPage() {
     fetchBranches(owner, repo).then(b => {
       if (b && b.length) {
         setBranches(b);
-        const nonMain = b.find(x => x !== 'main');
+        const nonMain = b.find((x: string) => x !== 'main');
         if (nonMain) setHeadBranch(nonMain);
       }
     }).catch(() => {});
