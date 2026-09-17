@@ -1,3 +1,5 @@
+'use client';
+
 export * from './CyberMatrixGrid';
 export * from './GsapStagger';
 export * from './GsapGlowCard';

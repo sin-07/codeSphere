@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: 'Production-grade GitHub alternative with real Git hosting, AI repository brain, browser IDE, CI/CD, and developer intelligence.',
 };
 
-import { CyberMatrixGrid } from '@/components/animations';
+import { CyberMatrixGrid } from '@/components/animations/CyberMatrixGrid';
 
 export default function RootLayout({
   children,
