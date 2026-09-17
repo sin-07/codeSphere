@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
@@ -43,26 +43,26 @@ export default function NewIssuePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d1117] flex flex-col">
+    <div className="min-h-screen bg-[#050806] flex flex-col">
       <Navbar />
       <RepoHeader owner={owner} repo={repo} activeTab="issues" />
 
       <main className="flex-1 max-w-3xl w-full mx-auto px-4 md:px-8 py-8 space-y-6">
-        <div className="pb-4 border-b border-[#30363d] space-y-1">
+        <div className="pb-4 border-b border-[rgba(16,185,129,0.15)] space-y-1">
           <h1 className="text-2xl font-bold text-white">Create a new issue</h1>
-          <p className="text-xs text-[#8b949e]">
+          <p className="text-xs text-[#91a897]">
             Track bugs, feature requests, and architectural improvements.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 bg-[#161b22] border border-[#30363d] rounded-2xl space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 bg-[#080d0a] border border-[rgba(16,185,129,0.15)] rounded-2xl space-y-4">
           <div>
             <label className="block text-xs font-semibold text-white mb-1">Title</label>
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Title for this issue..."
-              className="w-full p-2.5 bg-[#0d1117] border border-[#30363d] rounded-lg text-xs text-white focus:outline-none focus:border-cyan-400 font-medium"
+              className="w-full p-2.5 bg-[#050806] border border-[rgba(16,185,129,0.15)] rounded-lg text-xs text-white focus:outline-none focus:border-emerald-500/50 font-medium"
               required
             />
           </div>
@@ -74,13 +74,13 @@ export default function NewIssuePage() {
               onChange={(e) => setDescription(e.target.value)}
               rows={6}
               placeholder="Describe the bug or feature request in detail..."
-              className="w-full p-2.5 bg-[#0d1117] border border-[#30363d] rounded-lg text-xs text-white focus:outline-none focus:border-cyan-400 resize-none font-sans"
+              className="w-full p-2.5 bg-[#050806] border border-[rgba(16,185,129,0.15)] rounded-lg text-xs text-white focus:outline-none focus:border-emerald-500/50 resize-none font-sans"
             />
           </div>
 
           {/* Labels selector */}
-          <div className="space-y-1.5 pt-2 border-t border-[#21262d]">
-            <label className="block text-xs font-semibold text-[#8b949e]">Labels</label>
+          <div className="space-y-1.5 pt-2 border-t border-[#0c120e]">
+            <label className="block text-xs font-semibold text-[#91a897]">Labels</label>
             <div className="flex flex-wrap gap-2">
               {availableLabels.map(l => (
                 <button
@@ -89,8 +89,8 @@ export default function NewIssuePage() {
                   onClick={() => toggleLabel(l)}
                   className={`px-3 py-1 rounded-full text-xs font-semibold border transition-all ${
                     labels.includes(l)
-                      ? 'bg-cyan-950 text-cyan-300 border-cyan-500/50'
-                      : 'bg-[#0d1117] text-[#8b949e] border-[#30363d]'
+                      ? 'bg-cyan-950 text-emerald-300 border-emerald-500/40'
+                      : 'bg-[#050806] text-[#91a897] border-[rgba(16,185,129,0.15)]'
                   }`}
                 >
                   #{l}
@@ -99,11 +99,11 @@ export default function NewIssuePage() {
             </div>
           </div>
 
-          <div className="flex justify-end pt-2 border-t border-[#21262d]">
+          <div className="flex justify-end pt-2 border-t border-[#0c120e]">
             <button
               type="submit"
               disabled={isSubmitting || !title.trim()}
-              className="px-6 py-2 bg-[#238636] hover:bg-[#2ea043] font-semibold text-xs text-white rounded-lg transition-colors shadow-lg shadow-emerald-900/20 disabled:opacity-50"
+              className="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 font-semibold text-xs text-white rounded-lg transition-colors shadow-lg shadow-emerald-900/20 disabled:opacity-50"
             >
               {isSubmitting ? 'Submitting...' : 'Submit new issue'}
             </button>

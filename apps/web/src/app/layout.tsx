@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="min-h-screen bg-[#000000] text-[#f0faf0] antialiased selection:bg-[#00ff66]/20 selection:text-[#00ff66]">
+      <body className="min-h-screen bg-[#050806] text-[#f0f7f2] antialiased selection:bg-emerald-500/25 selection:text-emerald-200">
         <CyberMatrixGrid />
         <div className="relative z-10">{children}</div>
       </body>

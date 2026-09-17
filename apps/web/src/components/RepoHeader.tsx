@@ -64,54 +64,54 @@ export function RepoHeader({
   ];
 
   return (
-    <div className="bg-[#000000] border-b border-[#1a2c1a] pt-6 px-4 md:px-8 relative z-20">
+    <div className="bg-[#050806] border-b border-emerald-500/15 pt-6 px-4 md:px-8 relative z-20">
       <div className="max-w-7xl mx-auto">
         {/* Top bar: Repo path & action buttons */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-5">
           <div className="flex items-center gap-2.5 text-lg font-semibold">
-            <BookOpen className="w-5 h-5 text-[#86a686]" />
-            <a href={`/${owner}`} className="text-[#00ff66] hover:underline font-mono">
+            <BookOpen className="w-5 h-5 text-[#91a897]" />
+            <a href={`/${owner}`} className="text-emerald-400 hover:text-emerald-300 hover:underline font-mono">
               {owner}
             </a>
-            <span className="text-[#86a686]">/</span>
-            <a href={`/${owner}/${repo}`} className="text-white hover:text-[#00ff66] transition-colors font-mono">
+            <span className="text-[#91a897]">/</span>
+            <a href={`/${owner}/${repo}`} className="text-white hover:text-emerald-300 transition-colors font-mono">
               {repo}
             </a>
-            <span className="ml-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 text-xs font-mono font-semibold rounded-full bg-[#040604] text-[#00ff66] border border-[#00ff66]/30 shadow-[0_0_10px_rgba(0,255,102,0.15)]">
-              {isPrivate ? <Lock className="w-3 h-3 text-[#00ff66]" /> : <Globe className="w-3 h-3 text-[#00ff66]" />}
+            <span className="ml-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 text-xs font-mono font-medium rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/25">
+              {isPrivate ? <Lock className="w-3 h-3 text-emerald-400" /> : <Globe className="w-3 h-3 text-emerald-400" />}
               {isPrivate ? 'Private' : 'Public'}
             </span>
           </div>
 
           <div className="flex items-center gap-2">
             {/* Watch */}
-            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#040604] hover:bg-[#080c08] border border-[#1a2c1a] hover:border-[#00ff66]/40 text-xs font-semibold text-[#c2d6c2] hover:text-white rounded-lg transition-all">
-              <Eye className="w-3.5 h-3.5 text-[#86a686]" />
+            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0c120e] hover:bg-[#121c15] border border-emerald-500/20 hover:border-emerald-500/40 text-xs font-medium text-[#d1e0d5] hover:text-white rounded-lg transition-all">
+              <Eye className="w-3.5 h-3.5 text-[#91a897]" />
               <span>Watch</span>
             </button>
 
             {/* Fork */}
             <a
               href={`/${owner}/${repo}/fork`}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#040604] hover:bg-[#080c08] border border-[#1a2c1a] hover:border-[#00ff66]/40 text-xs font-semibold text-[#c2d6c2] hover:text-white rounded-lg transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0c120e] hover:bg-[#121c15] border border-emerald-500/20 hover:border-emerald-500/40 text-xs font-medium text-[#d1e0d5] hover:text-white rounded-lg transition-all"
             >
-              <GitFork className="w-3.5 h-3.5 text-[#86a686]" />
+              <GitFork className="w-3.5 h-3.5 text-[#91a897]" />
               <span>Fork</span>
-              <span className="ml-1 px-1.5 py-0.2 bg-[#000000] border border-[#1a2c1a] rounded-full text-[#86a686] font-mono">{forksCount}</span>
+              <span className="ml-1 px-1.5 py-0.2 bg-[#050806] border border-emerald-500/20 rounded-full text-emerald-400 font-mono text-[11px]">{forksCount}</span>
             </a>
 
             {/* Star */}
             <button
               onClick={handleStar}
-              className={`flex items-center gap-1.5 px-3 py-1.5 border text-xs font-semibold rounded-lg transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 border text-xs font-medium rounded-lg transition-all ${
                 starred
-                  ? 'bg-[#00ff66]/20 text-[#00ff66] border-[#00ff66] shadow-[0_0_15px_rgba(0,255,102,0.4)]'
-                  : 'bg-[#040604] hover:bg-[#080c08] border-[#1a2c1a] hover:border-[#00ff66]/40 text-white'
+                  ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/60 shadow-[0_0_15px_rgba(16,185,129,0.25)]'
+                  : 'bg-[#0c120e] hover:bg-[#121c15] border-emerald-500/20 hover:border-emerald-500/40 text-white'
               }`}
             >
-              <Star className={`w-3.5 h-3.5 ${starred ? 'fill-[#00ff66] text-[#00ff66]' : 'text-[#86a686]'}`} />
+              <Star className={`w-3.5 h-3.5 ${starred ? 'fill-emerald-400 text-emerald-400' : 'text-[#91a897]'}`} />
               <span>{starred ? 'Starred' : 'Star'}</span>
-              <span className="ml-1 px-1.5 py-0.2 bg-[#000000] border border-[#1a2c1a] rounded-full text-[#86a686] font-mono">{stars}</span>
+              <span className="ml-1 px-1.5 py-0.2 bg-[#050806] border border-emerald-500/20 rounded-full text-emerald-400 font-mono text-[11px]">{stars}</span>
             </button>
           </div>
         </div>
@@ -127,19 +127,19 @@ export function RepoHeader({
                 href={tab.href}
                 className={`flex items-center gap-2 px-3.5 py-2.5 text-sm font-medium border-b-2 whitespace-nowrap transition-all ${
                   isActive
-                    ? 'border-[#00ff66] text-[#00ff66] font-semibold shadow-[0_2px_10px_rgba(0,255,102,0.4)]'
-                    : 'border-transparent text-[#86a686] hover:text-[#c2d6c2] hover:border-[#00ff66]/30'
-                } ${tab.highlight ? 'text-[#4ade80] hover:text-[#00ff66]' : ''}`}
+                    ? 'border-emerald-500 text-emerald-300 font-semibold'
+                    : 'border-transparent text-[#91a897] hover:text-white hover:border-emerald-500/30'
+                } ${tab.highlight && !isActive ? 'text-emerald-400 hover:text-emerald-300' : ''}`}
               >
-                <Icon className={`w-4 h-4 ${tab.highlight ? 'text-[#00ff66]' : ''}`} />
+                <Icon className={`w-4 h-4 ${isActive || tab.highlight ? 'text-emerald-400' : 'text-[#91a897]'}`} />
                 <span>{tab.label}</span>
                 {tab.badge && (
-                  <span className="px-1.5 py-0.2 text-[11px] font-mono font-semibold rounded-full bg-[#131f13] text-[#00ff66] border border-[#1a2c1a]">
+                  <span className="px-1.5 py-0.2 text-[11px] font-mono font-medium rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
                     {tab.badge}
                   </span>
                 )}
                 {tab.highlight && !isActive && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00ff66] shadow-[0_0_6px_#00ff66] animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(16,185,129,0.6)] animate-pulse" />
                 )}
               </a>
             );

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
@@ -48,18 +48,18 @@ export default function IssuesListPage() {
   }, [owner, repo, statusFilter]);
 
   return (
-    <div className="min-h-screen bg-[#0d1117] flex flex-col">
+    <div className="min-h-screen bg-[#050806] flex flex-col">
       <Navbar />
       <RepoHeader owner={owner} repo={repo} activeTab="issues" />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-6 space-y-6">
         {/* Controls */}
         <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-1 bg-[#161b22] p-1 border border-[#30363d] rounded-lg text-xs">
+          <div className="flex items-center gap-1 bg-[#080d0a] p-1 border border-[rgba(16,185,129,0.15)] rounded-lg text-xs">
             <button
               onClick={() => setStatusFilter('open')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-semibold ${
-                statusFilter === 'open' ? 'bg-[#21262d] text-white' : 'text-[#8b949e] hover:text-white'
+                statusFilter === 'open' ? 'bg-[#0c120e] text-white' : 'text-[#91a897] hover:text-white'
               }`}
             >
               <AlertCircle className="w-3.5 h-3.5 text-emerald-400" />
@@ -68,7 +68,7 @@ export default function IssuesListPage() {
             <button
               onClick={() => setStatusFilter('closed')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-semibold ${
-                statusFilter === 'closed' ? 'bg-[#21262d] text-white' : 'text-[#8b949e] hover:text-white'
+                statusFilter === 'closed' ? 'bg-[#0c120e] text-white' : 'text-[#91a897] hover:text-white'
               }`}
             >
               <CheckCircle className="w-3.5 h-3.5 text-purple-400" />
@@ -78,7 +78,7 @@ export default function IssuesListPage() {
 
           <a
             href={`/${owner}/${repo}/issues/new`}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#238636] hover:bg-[#2ea043] rounded-md text-xs font-semibold text-white transition-colors"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 rounded-md text-xs font-semibold text-white transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>New issue</span>
@@ -86,19 +86,19 @@ export default function IssuesListPage() {
         </div>
 
         {/* Issue List */}
-        <div className="border border-[#30363d] rounded-xl overflow-hidden bg-[#161b22]">
-          <div className="p-3 bg-[#1c2128] border-b border-[#30363d] text-xs text-[#8b949e] font-semibold">
+        <div className="border border-[rgba(16,185,129,0.15)] rounded-xl overflow-hidden bg-[#080d0a]">
+          <div className="p-3 bg-[#1c2128] border-b border-[rgba(16,185,129,0.15)] text-xs text-[#91a897] font-semibold">
             {issues.length} Issues
           </div>
 
-          <div className="divide-y divide-[#21262d]">
+          <div className="divide-y divide-[#0c120e]">
             {issues.length === 0 ? (
-              <div className="p-12 text-center text-[#8b949e] text-sm">
+              <div className="p-12 text-center text-[#91a897] text-sm">
                 No issues match your criteria.
               </div>
             ) : (
               issues.map((issue) => (
-                <div key={issue.number} className="p-4 hover:bg-[#21262d]/40 transition-colors flex items-start justify-between gap-4">
+                <div key={issue.number} className="p-4 hover:bg-[#0c120e]/40 transition-colors flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
                     {issue.status === 'open' ? (
                       <AlertCircle className="w-4 h-4 text-emerald-400 mt-1" />
@@ -110,27 +110,27 @@ export default function IssuesListPage() {
                       <div className="flex flex-wrap items-center gap-2">
                         <a
                           href={`/${owner}/${repo}/issues/${issue.number}`}
-                          className="font-semibold text-white hover:text-indigo-400 text-sm transition-colors"
+                          className="font-semibold text-white hover:text-emerald-400 text-sm transition-colors"
                         >
                           {issue.title}
                         </a>
                         {issue.labels?.map((label, idx) => (
                           <span
                             key={idx}
-                            className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#21262d] text-cyan-300 border border-[#30363d]"
+                            className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#0c120e] text-emerald-300 border border-[rgba(16,185,129,0.15)]"
                           >
                             {label}
                           </span>
                         ))}
                       </div>
 
-                      <p className="text-xs text-[#8b949e]">
-                        #{issue.number} opened by <span className="text-[#c9d1d9]">{issue.author}</span>
+                      <p className="text-xs text-[#91a897]">
+                        #{issue.number} opened by <span className="text-[#d1e0d5]">{issue.author}</span>
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-1 text-xs text-[#8b949e]">
+                  <div className="flex items-center gap-1 text-xs text-[#91a897]">
                     <MessageSquare className="w-3.5 h-3.5" />
                     <span>{issue.commentsCount || 0}</span>
                   </div>

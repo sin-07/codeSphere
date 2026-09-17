@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
@@ -50,18 +50,18 @@ export default function PullRequestsListPage() {
   }, [owner, repo, filter]);
 
   return (
-    <div className="min-h-screen bg-[#0d1117] flex flex-col">
+    <div className="min-h-screen bg-[#050806] flex flex-col">
       <Navbar />
       <RepoHeader owner={owner} repo={repo} activeTab="pulls" />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-6 space-y-6">
         {/* Top Controls */}
         <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-1 bg-[#161b22] p-1 border border-[#30363d] rounded-lg text-xs">
+          <div className="flex items-center gap-1 bg-[#080d0a] p-1 border border-[rgba(16,185,129,0.15)] rounded-lg text-xs">
             <button
               onClick={() => setFilter('open')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-semibold ${
-                filter === 'open' ? 'bg-[#21262d] text-white' : 'text-[#8b949e] hover:text-white'
+                filter === 'open' ? 'bg-[#0c120e] text-white' : 'text-[#91a897] hover:text-white'
               }`}
             >
               <GitPullRequest className="w-3.5 h-3.5 text-emerald-400" />
@@ -70,7 +70,7 @@ export default function PullRequestsListPage() {
             <button
               onClick={() => setFilter('closed')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-semibold ${
-                filter === 'closed' ? 'bg-[#21262d] text-white' : 'text-[#8b949e] hover:text-white'
+                filter === 'closed' ? 'bg-[#0c120e] text-white' : 'text-[#91a897] hover:text-white'
               }`}
             >
               <CheckCircle className="w-3.5 h-3.5 text-purple-400" />
@@ -80,7 +80,7 @@ export default function PullRequestsListPage() {
 
           <a
             href={`/${owner}/${repo}/pulls/new`}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#238636] hover:bg-[#2ea043] rounded-md text-xs font-semibold text-white transition-colors"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 rounded-md text-xs font-semibold text-white transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>New pull request</span>
@@ -88,19 +88,19 @@ export default function PullRequestsListPage() {
         </div>
 
         {/* PR List Container */}
-        <div className="border border-[#30363d] rounded-xl overflow-hidden bg-[#161b22]">
-          <div className="p-3 bg-[#1c2128] border-b border-[#30363d] text-xs text-[#8b949e] font-semibold">
+        <div className="border border-[rgba(16,185,129,0.15)] rounded-xl overflow-hidden bg-[#080d0a]">
+          <div className="p-3 bg-[#1c2128] border-b border-[rgba(16,185,129,0.15)] text-xs text-[#91a897] font-semibold">
             {pulls.length} Pull Requests
           </div>
 
-          <div className="divide-y divide-[#21262d]">
+          <div className="divide-y divide-[#0c120e]">
             {pulls.length === 0 ? (
-              <div className="p-12 text-center text-[#8b949e] text-sm">
+              <div className="p-12 text-center text-[#91a897] text-sm">
                 No pull requests found.
               </div>
             ) : (
               pulls.map((pr) => (
-                <div key={pr.number} className="p-4 hover:bg-[#21262d]/40 transition-colors flex items-start justify-between gap-4">
+                <div key={pr.number} className="p-4 hover:bg-[#0c120e]/40 transition-colors flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
                     {pr.status === 'open' ? (
                       <GitPullRequest className="w-4 h-4 text-emerald-400 mt-1" />
@@ -111,12 +111,12 @@ export default function PullRequestsListPage() {
                     <div className="space-y-1">
                       <a
                         href={`/${owner}/${repo}/pull/${pr.number}`}
-                        className="font-semibold text-white hover:text-indigo-400 text-sm transition-colors"
+                        className="font-semibold text-white hover:text-emerald-400 text-sm transition-colors"
                       >
                         {pr.title}
                       </a>
-                      <p className="text-xs text-[#8b949e]">
-                        #{pr.number} opened by <span className="text-[#c9d1d9]">{pr.author}</span> • {pr.headBranch} into {pr.baseBranch}
+                      <p className="text-xs text-[#91a897]">
+                        #{pr.number} opened by <span className="text-[#d1e0d5]">{pr.author}</span> • {pr.headBranch} into {pr.baseBranch}
                       </p>
                     </div>
                   </div>

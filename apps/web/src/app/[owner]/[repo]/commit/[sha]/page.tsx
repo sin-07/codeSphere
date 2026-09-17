@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
@@ -37,36 +37,36 @@ export default function CommitDetailPage() {
   }, [owner, repo, sha]);
 
   return (
-    <div className="min-h-screen bg-[#0d1117] flex flex-col">
+    <div className="min-h-screen bg-[#050806] flex flex-col">
       <Navbar />
       <RepoHeader owner={owner} repo={repo} activeTab="code" />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-6 space-y-6">
         <a
           href={`/${owner}/${repo}/commits`}
-          className="inline-flex items-center gap-1 text-xs text-[#8b949e] hover:text-white transition-colors"
+          className="inline-flex items-center gap-1 text-xs text-[#91a897] hover:text-white transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to all commits</span>
         </a>
 
         {/* Commit Header Card */}
-        <div className="p-5 bg-[#161b22] border border-[#30363d] rounded-xl space-y-3">
+        <div className="p-5 bg-[#080d0a] border border-[rgba(16,185,129,0.15)] rounded-xl space-y-3">
           <h1 className="text-lg font-bold text-white leading-snug">
             {commit?.message || 'Commit'}
           </h1>
 
-          <div className="flex flex-wrap items-center justify-between gap-4 text-xs pt-2 border-t border-[#21262d]">
-            <div className="flex items-center gap-2 text-[#8b949e]">
-              <div className="w-5 h-5 rounded-full bg-indigo-500/30 flex items-center justify-center text-[10px] text-indigo-300 font-bold">
+          <div className="flex flex-wrap items-center justify-between gap-4 text-xs pt-2 border-t border-[#0c120e]">
+            <div className="flex items-center gap-2 text-[#91a897]">
+              <div className="w-5 h-5 rounded-full bg-indigo-500/30 flex items-center justify-center text-[10px] text-emerald-300 font-bold">
                 {commit?.author?.charAt(0) || 'A'}
               </div>
               <span className="text-white font-medium">{commit?.author}</span>
               <span>committed on {new Date(commit?.date || Date.now()).toLocaleString()}</span>
             </div>
 
-            <div className="flex items-center gap-2 font-mono text-[#8b949e]">
-              <span>commit: <strong className="text-cyan-400">{sha}</strong></span>
+            <div className="flex items-center gap-2 font-mono text-[#91a897]">
+              <span>commit: <strong className="text-emerald-400">{sha}</strong></span>
             </div>
           </div>
         </div>

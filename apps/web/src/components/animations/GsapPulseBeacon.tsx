@@ -11,35 +11,24 @@ interface GsapPulseBeaconProps {
 }
 
 export function GsapPulseBeacon({
-  size = 10,
-  color = '#00ff66',
+  size = 8,
+  color = '#10b981',
   className = '',
   label,
 }: GsapPulseBeaconProps) {
-  const ring1Ref = useRef<HTMLSpanElement | null>(null);
-  const ring2Ref = useRef<HTMLSpanElement | null>(null);
+  const ringRef = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
-    if (!ring1Ref.current || !ring2Ref.current) return;
+    if (!ringRef.current) return;
 
-    const tl = gsap.timeline({ repeat: -1 });
-
-    tl.fromTo(
-      ring1Ref.current,
-      { scale: 1, opacity: 0.8 },
-      { scale: 2.8, opacity: 0, duration: 1.8, ease: 'power1.out' },
-      0
-    );
-
-    tl.fromTo(
-      ring2Ref.current,
-      { scale: 1, opacity: 0.6 },
-      { scale: 2.2, opacity: 0, duration: 1.8, ease: 'power1.out' },
-      0.4
+    const tween = gsap.fromTo(
+      ringRef.current,
+      { scale: 1, opacity: 0.75 },
+      { scale: 2.4, opacity: 0, duration: 2, repeat: -1, ease: 'power1.out' }
     );
 
     return () => {
-      tl.kill();
+      tween.kill();
     };
   }, []);
 
@@ -47,26 +36,20 @@ export function GsapPulseBeacon({
     <span className={`inline-flex items-center gap-2 ${className}`}>
       <span className="relative flex items-center justify-center" style={{ width: size, height: size }}>
         <span
-          ref={ring1Ref}
+          ref={ringRef}
           className="absolute rounded-full pointer-events-none"
-          style={{ width: size, height: size, border: `1px solid ${color}` }}
+          style={{ width: size, height: size, border: `1.5px solid ${color}` }}
         />
         <span
-          ref={ring2Ref}
-          className="absolute rounded-full pointer-events-none"
-          style={{ width: size, height: size, border: `1px solid ${color}` }}
-        />
-        <span
-          className="relative rounded-full"
+          className="relative rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)]"
           style={{
             width: size,
             height: size,
             backgroundColor: color,
-            boxShadow: `0 0 10px ${color}`,
           }}
         />
       </span>
-      {label && <span className="text-xs font-mono text-[#c2d6c2]">{label}</span>}
+      {label && <span className="text-xs font-mono text-[#91a897] font-medium">{label}</span>}
     </span>
   );
 }

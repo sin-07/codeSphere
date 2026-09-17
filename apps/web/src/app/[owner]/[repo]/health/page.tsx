@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
@@ -80,33 +80,33 @@ export default function HealthAndCostPage() {
   }, [owner, repo, timeWindow]);
 
   return (
-    <div className="min-h-screen bg-[#0d1117] flex flex-col">
+    <div className="min-h-screen bg-[#050806] flex flex-col">
       <Navbar />
       <RepoHeader owner={owner} repo={repo} activeTab="health" />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-6 space-y-8">
         {/* Section 1: What Changed While You Were Away */}
-        <div className="p-6 rounded-2xl bg-gradient-to-br from-[#161b22] via-[#131b2e] to-[#0d1117] border border-cyan-500/30 shadow-2xl space-y-4">
+        <div className="p-6 rounded-2xl bg-gradient-to-br from-[#080d0a] via-[#131b2e] to-[#050806] border border-emerald-500/20 shadow-2xl space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-cyan-950/80 border border-cyan-500/50 flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-cyan-400" />
+              <div className="w-10 h-10 rounded-xl bg-cyan-950/80 border border-emerald-500/40 flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-emerald-400" />
               </div>
               <div>
                 <h2 className="text-lg font-bold text-white">“What Changed While I Was Away”</h2>
-                <p className="text-xs text-[#8b949e]">
+                <p className="text-xs text-[#91a897]">
                   AI delta summary synthesizing recent commits, merged PRs, and architectural shifts.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-1 bg-[#0d1117] p-0.5 rounded-lg border border-[#30363d] text-xs">
+            <div className="flex items-center gap-1 bg-[#050806] p-0.5 rounded-lg border border-[rgba(16,185,129,0.15)] text-xs">
               {['24h', '3d', '7d', '30d'].map((w) => (
                 <button
                   key={w}
                   onClick={() => setTimeWindow(w)}
                   className={`px-3 py-1 rounded-md font-medium transition-colors ${
-                    timeWindow === w ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' : 'text-[#8b949e] hover:text-white'
+                    timeWindow === w ? 'bg-cyan-500/20 text-emerald-300 border border-emerald-500/30' : 'text-[#91a897] hover:text-white'
                   }`}
                 >
                   Last {w}
@@ -115,15 +115,15 @@ export default function HealthAndCostPage() {
             </div>
           </div>
 
-          <div className="p-4 bg-[#0d1117]/80 border border-[#30363d] rounded-xl space-y-3 text-xs">
+          <div className="p-4 bg-[#050806]/80 border border-[rgba(16,185,129,0.15)] rounded-xl space-y-3 text-xs">
             <p className="text-slate-200 font-medium leading-relaxed">
               {awayData?.executiveSummary}
             </p>
 
-            <div className="space-y-1.5 pt-2 border-t border-[#21262d]">
+            <div className="space-y-1.5 pt-2 border-t border-[#0c120e]">
               <span className="font-semibold text-white">Key Highlights:</span>
               {awayData?.keyHighlights?.map((h: string, idx: number) => (
-                <p key={idx} className="flex items-center gap-2 text-[#8b949e]">
+                <p key={idx} className="flex items-center gap-2 text-[#91a897]">
                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                   <span>{h}</span>
                 </p>
@@ -134,63 +134,63 @@ export default function HealthAndCostPage() {
 
         {/* Section 2: Health & Maintainability Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-5 bg-[#161b22] border border-[#30363d] rounded-xl space-y-3">
+          <div className="p-5 bg-[#080d0a] border border-[rgba(16,185,129,0.15)] rounded-xl space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-[#8b949e] font-semibold">Maintainability Index</span>
+              <span className="text-xs text-[#91a897] font-semibold">Maintainability Index</span>
               <Activity className="w-4 h-4 text-emerald-400" />
             </div>
             <div className="text-3xl font-bold text-white">
               {healthData?.healthScore || 88} <span className="text-xs text-emerald-400 font-normal">/ 100 ({healthData?.healthRating || 'EXCELLENT'})</span>
             </div>
-            <p className="text-[11px] text-[#8b949e]">
+            <p className="text-[11px] text-[#91a897]">
               Based on cyclomatic complexity, test coverage, and documentation density.
             </p>
           </div>
 
-          <div className="p-5 bg-[#161b22] border border-[#30363d] rounded-xl space-y-3">
+          <div className="p-5 bg-[#080d0a] border border-[rgba(16,185,129,0.15)] rounded-xl space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-[#8b949e] font-semibold">Bus Factor</span>
-              <Users className="w-4 h-4 text-indigo-400" />
+              <span className="text-xs text-[#91a897] font-semibold">Bus Factor</span>
+              <Users className="w-4 h-4 text-emerald-400" />
             </div>
             <div className="text-3xl font-bold text-white">
-              {healthData?.busFactor || 2} <span className="text-xs text-indigo-300 font-normal">maintainers</span>
+              {healthData?.busFactor || 2} <span className="text-xs text-emerald-300 font-normal">maintainers</span>
             </div>
-            <p className="text-[11px] text-[#8b949e]">
+            <p className="text-[11px] text-[#91a897]">
               Healthy distribution across {healthData?.activeContributors || 3} active contributors.
             </p>
           </div>
 
-          <div className="p-5 bg-[#161b22] border border-[#30363d] rounded-xl space-y-3">
+          <div className="p-5 bg-[#080d0a] border border-[rgba(16,185,129,0.15)] rounded-xl space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-[#8b949e] font-semibold">Commit Velocity</span>
-              <TrendingUp className="w-4 h-4 text-cyan-400" />
+              <span className="text-xs text-[#91a897] font-semibold">Commit Velocity</span>
+              <TrendingUp className="w-4 h-4 text-emerald-400" />
             </div>
             <div className="text-3xl font-bold text-white">
-              {healthData?.commitVelocity || 6.5} <span className="text-xs text-cyan-300 font-normal">commits/week</span>
+              {healthData?.commitVelocity || 6.5} <span className="text-xs text-emerald-300 font-normal">commits/week</span>
             </div>
-            <p className="text-[11px] text-[#8b949e]">
+            <p className="text-[11px] text-[#91a897]">
               {healthData?.issueResolutionRate || 90}% issue resolution rate.
             </p>
           </div>
         </div>
 
         {/* Section 3: Cloud & AI Cost Tracker */}
-        <div className="border border-[#30363d] rounded-2xl bg-[#161b22] p-6 space-y-6">
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#30363d]">
+        <div className="border border-[rgba(16,185,129,0.15)] rounded-2xl bg-[#080d0a] p-6 space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[rgba(16,185,129,0.15)]">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-emerald-950/80 border border-emerald-500/50 flex items-center justify-center">
                 <DollarSign className="w-5 h-5 text-emerald-400" />
               </div>
               <div>
                 <h3 className="font-bold text-base text-white">Cloud & AI Resource Cost Telemetry</h3>
-                <p className="text-xs text-[#8b949e]">
+                <p className="text-xs text-[#91a897]">
                   Transparent billing estimates for CI runners, Git storage, and AI Repository Brain tokens.
                 </p>
               </div>
             </div>
 
             <div className="text-right">
-              <span className="text-xs text-[#8b949e] block">Estimated Total</span>
+              <span className="text-xs text-[#91a897] block">Estimated Total</span>
               <span className="text-2xl font-bold text-emerald-400 font-mono">
                 ${costData?.totalCostUsd || '14.80'} / mo
               </span>
@@ -198,28 +198,28 @@ export default function HealthAndCostPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-            <div className="p-4 bg-[#0d1117] rounded-xl border border-[#30363d] space-y-2">
+            <div className="p-4 bg-[#050806] rounded-xl border border-[rgba(16,185,129,0.15)] space-y-2">
               <span className="font-semibold text-white">CI/CD Runner Minutes</span>
-              <p className="text-2xl font-bold text-cyan-400 font-mono">
+              <p className="text-2xl font-bold text-emerald-400 font-mono">
                 {costData?.breakdown?.ciCompute?.minutesUsed || 180} mins
               </p>
-              <p className="text-[#8b949e]">{costData?.breakdown?.ciCompute?.unitRate || '$0.008/min'}</p>
+              <p className="text-[#91a897]">{costData?.breakdown?.ciCompute?.unitRate || '$0.008/min'}</p>
             </div>
 
-            <div className="p-4 bg-[#0d1117] rounded-xl border border-[#30363d] space-y-2">
+            <div className="p-4 bg-[#050806] rounded-xl border border-[rgba(16,185,129,0.15)] space-y-2">
               <span className="font-semibold text-white">Git LFS & Object Storage</span>
-              <p className="text-2xl font-bold text-indigo-400 font-mono">
+              <p className="text-2xl font-bold text-emerald-400 font-mono">
                 {costData?.breakdown?.gitStorage?.storageGb || 0.15} GB
               </p>
-              <p className="text-[#8b949e]">{costData?.breakdown?.gitStorage?.unitRate || '$0.08/GB-mo'}</p>
+              <p className="text-[#91a897]">{costData?.breakdown?.gitStorage?.unitRate || '$0.08/GB-mo'}</p>
             </div>
 
-            <div className="p-4 bg-[#0d1117] rounded-xl border border-[#30363d] space-y-2">
+            <div className="p-4 bg-[#050806] rounded-xl border border-[rgba(16,185,129,0.15)] space-y-2">
               <span className="font-semibold text-white">AI Repository Brain Tokens</span>
               <p className="text-2xl font-bold text-emerald-400 font-mono">
                 {costData?.breakdown?.aiBrainUsage?.queriesProcessed || 120} queries
               </p>
-              <p className="text-[#8b949e]">{costData?.breakdown?.aiBrainUsage?.unitRate || '$0.0015/1K tokens'}</p>
+              <p className="text-[#91a897]">{costData?.breakdown?.aiBrainUsage?.unitRate || '$0.0015/1K tokens'}</p>
             </div>
           </div>
         </div>

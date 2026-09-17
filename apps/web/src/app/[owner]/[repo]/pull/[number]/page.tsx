@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
@@ -106,16 +106,16 @@ export default function PullRequestDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d1117] flex flex-col">
+    <div className="min-h-screen bg-[#050806] flex flex-col">
       <Navbar />
       <RepoHeader owner={owner} repo={repo} activeTab="pulls" />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-6 space-y-6">
         {/* PR Header */}
-        <div className="space-y-2 pb-4 border-b border-[#30363d]">
+        <div className="space-y-2 pb-4 border-b border-[rgba(16,185,129,0.15)]">
           <h1 className="text-2xl font-bold text-white flex items-center gap-3">
             <span>{pr?.title || 'Pull Request'}</span>
-            <span className="text-[#8b949e] font-normal font-mono">#{prNumber}</span>
+            <span className="text-[#91a897] font-normal font-mono">#{prNumber}</span>
           </h1>
 
           <div className="flex flex-wrap items-center gap-3 text-xs">
@@ -133,20 +133,20 @@ export default function PullRequestDetailPage() {
               </span>
             )}
 
-            <span className="text-[#8b949e]">
+            <span className="text-[#91a897]">
               <strong className="text-white">{pr?.author}</strong> wants to merge commits into{' '}
-              <code className="px-1.5 py-0.5 bg-[#21262d] rounded text-indigo-300 font-mono">{pr?.baseBranch}</code> from{' '}
-              <code className="px-1.5 py-0.5 bg-[#21262d] rounded text-cyan-300 font-mono">{pr?.headBranch}</code>
+              <code className="px-1.5 py-0.5 bg-[#0c120e] rounded text-emerald-300 font-mono">{pr?.baseBranch}</code> from{' '}
+              <code className="px-1.5 py-0.5 bg-[#0c120e] rounded text-emerald-300 font-mono">{pr?.headBranch}</code>
             </span>
           </div>
         </div>
 
         {/* Subtabs: Conversation vs Files Changed */}
-        <div className="flex items-center gap-2 border-b border-[#30363d] text-sm font-medium">
+        <div className="flex items-center gap-2 border-b border-[rgba(16,185,129,0.15)] text-sm font-medium">
           <button
             onClick={() => setActiveTab('conversation')}
             className={`flex items-center gap-2 px-4 py-2 border-b-2 transition-colors ${
-              activeTab === 'conversation' ? 'border-[#f78166] text-white' : 'border-transparent text-[#8b949e] hover:text-white'
+              activeTab === 'conversation' ? 'border-[#f78166] text-white' : 'border-transparent text-[#91a897] hover:text-white'
             }`}
           >
             <MessageSquare className="w-4 h-4" />
@@ -155,7 +155,7 @@ export default function PullRequestDetailPage() {
           <button
             onClick={() => setActiveTab('files')}
             className={`flex items-center gap-2 px-4 py-2 border-b-2 transition-colors ${
-              activeTab === 'files' ? 'border-[#f78166] text-white' : 'border-transparent text-[#8b949e] hover:text-white'
+              activeTab === 'files' ? 'border-[#f78166] text-white' : 'border-transparent text-[#91a897] hover:text-white'
             }`}
           >
             <FileCode className="w-4 h-4" />
@@ -170,8 +170,8 @@ export default function PullRequestDetailPage() {
             {riskData && <PRRiskGauge riskData={riskData} />}
 
             {/* Description Card */}
-            <div className="border border-[#30363d] rounded-xl overflow-hidden bg-[#161b22]">
-              <div className="p-3 bg-[#1c2128] border-b border-[#30363d] text-xs text-[#8b949e] font-semibold flex items-center justify-between">
+            <div className="border border-[rgba(16,185,129,0.15)] rounded-xl overflow-hidden bg-[#080d0a]">
+              <div className="p-3 bg-[#1c2128] border-b border-[rgba(16,185,129,0.15)] text-xs text-[#91a897] font-semibold flex items-center justify-between">
                 <span>{pr?.author} commented</span>
                 <span>{new Date(pr?.createdAt || Date.now()).toLocaleDateString()}</span>
               </div>
@@ -181,11 +181,11 @@ export default function PullRequestDetailPage() {
             </div>
 
             {/* Reviewer Status Actions */}
-            <div className="p-4 bg-[#161b22] border border-[#30363d] rounded-xl flex flex-wrap items-center justify-between gap-4 text-xs">
+            <div className="p-4 bg-[#080d0a] border border-[rgba(16,185,129,0.15)] rounded-xl flex flex-wrap items-center justify-between gap-4 text-xs">
               <div className="flex items-center gap-3">
                 <CheckCircle className="w-4 h-4 text-emerald-400" />
                 <span className="font-semibold text-white">Review Decisions:</span>
-                <span className="text-[#8b949e]">
+                <span className="text-[#91a897]">
                   {pr?.reviewers?.length ? `${pr.reviewers.length} reviewer(s) approved` : 'Pending review'}
                 </span>
               </div>
@@ -200,7 +200,7 @@ export default function PullRequestDetailPage() {
                   </button>
                   <button
                     onClick={() => handleReview('changes_requested')}
-                    className="px-3 py-1.5 bg-[#21262d] hover:bg-[#30363d] text-rose-300 border border-rose-500/30 rounded-md transition-colors"
+                    className="px-3 py-1.5 bg-[#0c120e] hover:bg-[rgba(16,185,129,0.15)] text-rose-300 border border-rose-500/30 rounded-md transition-colors"
                   >
                     Request Changes
                   </button>
@@ -218,7 +218,7 @@ export default function PullRequestDetailPage() {
                     </div>
                     <div>
                       <h4 className="font-bold text-sm text-white">This branch has no conflicts with base branch</h4>
-                      <p className="text-xs text-[#8b949e]">Merging can be performed automatically via native 3-way Git merge.</p>
+                      <p className="text-xs text-[#91a897]">Merging can be performed automatically via native 3-way Git merge.</p>
                     </div>
                   </div>
 
@@ -226,7 +226,7 @@ export default function PullRequestDetailPage() {
                     <select
                       value={mergeStrategy}
                       onChange={(e: any) => setMergeStrategy(e.target.value)}
-                      className="px-3 py-1.5 bg-[#0d1117] border border-[#30363d] rounded-md text-xs text-white focus:outline-none"
+                      className="px-3 py-1.5 bg-[#050806] border border-[rgba(16,185,129,0.15)] rounded-md text-xs text-white focus:outline-none"
                     >
                       <option value="merge">Create a merge commit</option>
                       <option value="squash">Squash and merge</option>
@@ -236,7 +236,7 @@ export default function PullRequestDetailPage() {
                     <button
                       onClick={handleMerge}
                       disabled={isMerging}
-                      className="px-4 py-1.5 bg-[#238636] hover:bg-[#2ea043] font-semibold text-xs text-white rounded-md transition-colors disabled:opacity-50"
+                      className="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 font-semibold text-xs text-white rounded-md transition-colors disabled:opacity-50"
                     >
                       {isMerging ? 'Merging...' : 'Merge pull request'}
                     </button>

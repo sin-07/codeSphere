@@ -5,7 +5,6 @@ import {
   Search, 
   BookOpen, 
   GitPullRequest, 
-  AlertCircle, 
   Sparkles, 
   Terminal, 
   Map, 
@@ -48,9 +47,6 @@ export function CommandPalette({ isOpen, onClose }: { isOpen: boolean; onClose: 
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
         if (isOpen) onClose();
-        else {
-          // Open
-        }
       }
       if (e.key === 'Escape' && isOpen) {
         onClose();
@@ -74,11 +70,11 @@ export function CommandPalette({ isOpen, onClose }: { isOpen: boolean; onClose: 
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
-      <div className="w-full max-w-xl bg-[#161b22] border border-[#30363d] rounded-xl shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-black/75 backdrop-blur-md animate-fadeIn">
+      <div className="w-full max-w-xl bg-[#080d0a] border border-emerald-500/25 rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.9)] overflow-hidden">
         {/* Search Input Bar */}
-        <div className="flex items-center px-4 py-3 border-b border-[#30363d] gap-3">
-          <Search className="w-5 h-5 text-cyan-400" />
+        <div className="flex items-center px-4 py-3.5 border-b border-emerald-500/15 gap-3">
+          <Search className="w-5 h-5 text-emerald-400" />
           <input
             ref={inputRef}
             value={query}
@@ -87,17 +83,17 @@ export function CommandPalette({ isOpen, onClose }: { isOpen: boolean; onClose: 
               setSelectedIndex(0);
             }}
             placeholder="Search code, repos, PRs, or launch AI tools..."
-            className="w-full bg-transparent border-0 text-white placeholder-[#8b949e] focus:outline-none text-base"
+            className="w-full bg-transparent border-0 text-white placeholder-[#91a897]/60 focus:outline-none text-sm font-sans"
           />
-          <button onClick={onClose} className="text-[#8b949e] hover:text-white p-1">
+          <button onClick={onClose} className="text-[#91a897] hover:text-white p-1 transition-colors">
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Results List */}
-        <div className="max-h-96 overflow-y-auto p-2 divide-y divide-[#30363d]/30">
+        <div className="max-h-96 overflow-y-auto p-2 divide-y divide-emerald-500/10">
           {filtered.length === 0 ? (
-            <div className="p-8 text-center text-[#8b949e]">
+            <div className="p-8 text-center text-[#91a897] text-xs font-mono">
               <p>No results found for &ldquo;{query}&rdquo;</p>
             </div>
           ) : (
@@ -108,20 +104,22 @@ export function CommandPalette({ isOpen, onClose }: { isOpen: boolean; onClose: 
                   key={item.id}
                   href={item.href}
                   onClick={onClose}
-                  className={`flex items-center justify-between px-3 py-2.5 rounded-lg text-sm transition-all group ${
-                    idx === selectedIndex ? 'bg-[#21262d] text-white border-l-2 border-indigo-400' : 'text-[#c9d1d9] hover:bg-[#21262d]/60'
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm transition-all group ${
+                    idx === selectedIndex 
+                      ? 'bg-emerald-500/15 text-white border-l-2 border-emerald-400' 
+                      : 'text-[#d1e0d5] hover:bg-emerald-500/10'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 rounded bg-[#0d1117] flex items-center justify-center text-cyan-400">
+                    <div className="w-7 h-7 rounded-lg bg-[#0c120e] border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:border-emerald-500/40">
                       <Icon className="w-4 h-4" />
                     </div>
                     <div>
-                      <p className="font-medium text-white">{item.title}</p>
-                      <span className="text-xs text-[#8b949e]">{item.category}</span>
+                      <p className="font-medium text-xs text-white group-hover:text-emerald-300 transition-colors">{item.title}</p>
+                      <span className="text-[11px] text-[#91a897]">{item.category}</span>
                     </div>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-[#8b949e] opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <ArrowRight className="w-4 h-4 text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </a>
               );
             })
@@ -129,10 +127,10 @@ export function CommandPalette({ isOpen, onClose }: { isOpen: boolean; onClose: 
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-2 bg-[#0d1117] border-t border-[#30363d] flex items-center justify-between text-xs text-[#8b949e]">
-          <span>Navigation: <kbd className="px-1 py-0.5 bg-[#21262d] rounded">↑</kbd> <kbd className="px-1 py-0.5 bg-[#21262d] rounded">↓</kbd></span>
-          <span>Select: <kbd className="px-1 py-0.5 bg-[#21262d] rounded">↵ Enter</kbd></span>
-          <span>Close: <kbd className="px-1 py-0.5 bg-[#21262d] rounded">Esc</kbd></span>
+        <div className="px-4 py-2.5 bg-[#050806] border-t border-emerald-500/15 flex items-center justify-between text-[11px] text-[#91a897]">
+          <span>Navigation: <kbd className="px-1.5 py-0.5 bg-[#0c120e] border border-emerald-500/20 rounded text-emerald-300 font-mono">↑</kbd> <kbd className="px-1.5 py-0.5 bg-[#0c120e] border border-emerald-500/20 rounded text-emerald-300 font-mono">↓</kbd></span>
+          <span>Select: <kbd className="px-1.5 py-0.5 bg-[#0c120e] border border-emerald-500/20 rounded text-emerald-300 font-mono">↵</kbd></span>
+          <span>Close: <kbd className="px-1.5 py-0.5 bg-[#0c120e] border border-emerald-500/20 rounded text-emerald-300 font-mono">Esc</kbd></span>
         </div>
       </div>
     </div>

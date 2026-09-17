@@ -5,14 +5,12 @@ import { useParams } from 'next/navigation';
 import { Navbar } from '@/components/Navbar';
 import { ContributionHeatmap } from '@/components/ContributionHeatmap';
 import { 
-  User, 
   MapPin, 
   Building, 
   Globe, 
   BookOpen, 
   Star, 
   GitFork, 
-  ExternalLink,
   Sparkles,
   Award
 } from 'lucide-react';
@@ -82,7 +80,7 @@ export default function UserProfilePage() {
   }, [owner]);
 
   return (
-    <div className="min-h-screen bg-[#000000] text-[#f0faf0] flex flex-col selection:bg-[#00ff66]/20 selection:text-[#00ff66]">
+    <div className="min-h-screen bg-[#050806] text-[#f0f7f2] flex flex-col selection:bg-emerald-500/25 selection:text-emerald-200">
       <Navbar />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-8 relative z-10">
@@ -93,47 +91,47 @@ export default function UserProfilePage() {
               <img
                 src={profile?.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'}
                 alt={owner}
-                className="w-48 h-48 rounded-2xl border-2 border-[#00ff66] shadow-[0_0_30px_rgba(0,255,102,0.3)] object-cover"
+                className="w-44 h-44 rounded-2xl border border-emerald-500/40 shadow-[0_0_25px_rgba(16,185,129,0.15)] object-cover"
               />
-              <div className="absolute -bottom-2 -right-2 p-2 bg-[#040604] border border-[#00ff66]/50 rounded-xl text-[#00ff66] shadow-[0_0_15px_rgba(0,255,102,0.35)]" title="Verified Maintainer">
+              <div className="absolute -bottom-2 -right-2 p-2 bg-[#0c120e] border border-emerald-500/30 rounded-xl text-emerald-400 shadow-sm" title="Verified Maintainer">
                 <Sparkles className="w-4 h-4" />
               </div>
             </div>
 
             <div className="space-y-1">
-              <h1 className="text-2xl font-black text-white font-sans">{profile?.name || owner}</h1>
-              <p className="text-sm font-mono text-[#00ff66]">@{owner}</p>
+              <h1 className="text-2xl font-bold text-white font-sans">{profile?.name || owner}</h1>
+              <p className="text-sm font-mono text-emerald-400">@{owner}</p>
             </div>
 
-            <p className="text-xs text-[#86a686] leading-relaxed">
+            <p className="text-xs text-[#91a897] leading-relaxed">
               {profile?.bio}
             </p>
 
             <a
               href={`/${owner}/portfolio`}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-[#00ff66] hover:bg-[#22c55e] text-black font-bold text-xs rounded-xl transition-all shadow-[0_0_20px_rgba(0,255,102,0.35)] hover:shadow-[0_0_30px_rgba(0,255,102,0.55)]"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs rounded-xl transition-all shadow-[0_1px_15px_rgba(16,185,129,0.3)] hover:shadow-[0_1px_20px_rgba(16,185,129,0.45)]"
             >
-              <Award className="w-4 h-4 stroke-[2.5]" />
+              <Award className="w-4 h-4" />
               <span>View Auto Portfolio</span>
             </a>
 
-            <div className="space-y-2.5 pt-4 border-t border-[#1a2c1a] text-xs font-mono text-[#86a686]">
+            <div className="space-y-2.5 pt-4 border-t border-emerald-500/10 text-xs font-mono text-[#91a897]">
               {profile?.company && (
-                <div className="flex items-center gap-2 text-[#c2d6c2]">
-                  <Building className="w-3.5 h-3.5 text-[#00ff66]" />
+                <div className="flex items-center gap-2 text-[#d1e0d5]">
+                  <Building className="w-3.5 h-3.5 text-emerald-400" />
                   <span>{profile.company}</span>
                 </div>
               )}
               {profile?.location && (
-                <div className="flex items-center gap-2 text-[#c2d6c2]">
-                  <MapPin className="w-3.5 h-3.5 text-[#00ff66]" />
+                <div className="flex items-center gap-2 text-[#d1e0d5]">
+                  <MapPin className="w-3.5 h-3.5 text-emerald-400" />
                   <span>{profile.location}</span>
                 </div>
               )}
               {profile?.website && (
                 <div className="flex items-center gap-2">
-                  <Globe className="w-3.5 h-3.5 text-[#00ff66]" />
-                  <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-[#00ff66] hover:underline">
+                  <Globe className="w-3.5 h-3.5 text-emerald-400" />
+                  <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 hover:underline">
                     {profile.website}
                   </a>
                 </div>
@@ -151,8 +149,8 @@ export default function UserProfilePage() {
 
             {/* Repositories */}
             <div className="space-y-4">
-              <h3 className="font-bold text-base text-white flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-[#00ff66]" />
+              <h3 className="font-semibold text-base text-white flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-emerald-400" />
                 <span>Popular Public Repositories</span>
               </h3>
 
@@ -160,36 +158,36 @@ export default function UserProfilePage() {
                 {(profile?.repositories || []).map((repo: any) => (
                   <GsapGlowCard
                     key={repo.slug}
-                    className="p-5 border-[#1a2c1a] flex flex-col justify-between space-y-4"
+                    className="p-5 border-emerald-500/15 bg-[#080d0a]/80 flex flex-col justify-between space-y-4"
                   >
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <a
                           href={`/${repo.slug}`}
-                          className="font-bold text-sm text-[#00ff66] hover:underline font-mono"
+                          className="font-semibold text-sm text-white hover:text-emerald-300 transition-colors font-mono"
                         >
                           {repo.name}
                         </a>
-                        <span className="px-2 py-0.5 rounded-full bg-[#00ff66]/10 text-[#00ff66] border border-[#00ff66]/30 text-[10px] font-mono">
+                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-mono">
                           PUBLIC
                         </span>
                       </div>
-                      <p className="text-xs text-[#86a686] leading-relaxed">
+                      <p className="text-xs text-[#91a897] leading-relaxed">
                         {repo.description}
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-4 text-xs font-mono text-[#86a686] pt-2 border-t border-[#1a2c1a]">
-                      <span className="flex items-center gap-1.5 text-[#00ff66] font-semibold">
-                        <span className="w-2 h-2 rounded-full bg-[#00ff66]" />
+                    <div className="flex items-center gap-4 text-xs font-mono text-[#91a897] pt-2 border-t border-emerald-500/10">
+                      <span className="flex items-center gap-1.5 text-emerald-400 font-medium">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                         {repo.language}
                       </span>
-                      <span className="flex items-center gap-1">
-                        <Star className="w-3.5 h-3.5 text-[#00ff66]" />
+                      <span className="flex items-center gap-1 text-[#91a897]">
+                        <Star className="w-3.5 h-3.5 text-emerald-400" />
                         {repo.starsCount}
                       </span>
-                      <span className="flex items-center gap-1">
-                        <GitFork className="w-3.5 h-3.5 text-[#86a686]" />
+                      <span className="flex items-center gap-1 text-[#91a897]">
+                        <GitFork className="w-3.5 h-3.5 text-[#91a897]" />
                         {repo.forksCount}
                       </span>
                     </div>

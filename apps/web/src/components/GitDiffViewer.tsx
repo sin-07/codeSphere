@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FileCode, Plus, MessageSquare, ChevronDown, ChevronRight, Check } from 'lucide-react';
+import { FileCode, Plus, Check } from 'lucide-react';
 
 interface GitDiffViewerProps {
   diffText: string;
@@ -68,23 +68,23 @@ export function GitDiffViewer({ diffText, filesChanged = [], onAddComment }: Git
   return (
     <div className="space-y-6">
       {/* Diff Controls Header */}
-      <div className="flex items-center justify-between px-4 py-2.5 bg-[#161b22] border border-[#30363d] rounded-lg text-sm">
-        <div className="flex items-center gap-4 text-xs">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-[#080d0a]/90 border border-emerald-500/15 rounded-xl text-sm backdrop-blur-xl">
+        <div className="flex items-center gap-4 text-xs font-mono">
           <span className="font-semibold text-white">Showing {parsedFiles.length || filesChanged.length} changed files</span>
           <span className="text-emerald-400 font-medium">+{filesChanged.reduce((acc, f) => acc + f.additions, 0)} additions</span>
           <span className="text-rose-400 font-medium">-{filesChanged.reduce((acc, f) => acc + f.deletions, 0)} deletions</span>
         </div>
 
-        <div className="flex items-center gap-1 bg-[#0d1117] p-0.5 rounded-md border border-[#30363d]">
+        <div className="flex items-center gap-1 bg-[#050806] p-0.5 rounded-lg border border-emerald-500/20 text-xs">
           <button
             onClick={() => setActiveView('unified')}
-            className={`px-3 py-1 text-xs font-medium rounded ${activeView === 'unified' ? 'bg-[#21262d] text-white' : 'text-[#8b949e]'}`}
+            className={`px-2.5 py-0.5 rounded-md font-medium transition-colors ${activeView === 'unified' ? 'bg-emerald-500/20 text-emerald-300 font-semibold' : 'text-[#91a897]'}`}
           >
             Unified
           </button>
           <button
             onClick={() => setActiveView('split')}
-            className={`px-3 py-1 text-xs font-medium rounded ${activeView === 'split' ? 'bg-[#21262d] text-white' : 'text-[#8b949e]'}`}
+            className={`px-2.5 py-0.5 rounded-md font-medium transition-colors ${activeView === 'split' ? 'bg-emerald-500/20 text-emerald-300 font-semibold' : 'text-[#91a897]'}`}
           >
             Split
           </button>
@@ -93,17 +93,17 @@ export function GitDiffViewer({ diffText, filesChanged = [], onAddComment }: Git
 
       {/* Files Diffs */}
       {parsedFiles.length === 0 ? (
-        <div className="p-8 text-center text-[#8b949e] border border-[#30363d] rounded-lg bg-[#161b22]">
+        <div className="p-8 text-center text-[#91a897] border border-emerald-500/15 rounded-xl bg-[#080d0a]/80 font-mono text-xs">
           <p>No textual differences to display.</p>
         </div>
       ) : (
         parsedFiles.map((file, fIdx) => (
-          <div key={fIdx} className="border border-[#30363d] rounded-lg overflow-hidden bg-[#0d1117]">
+          <div key={fIdx} className="border border-emerald-500/15 rounded-xl overflow-hidden bg-[#050806] shadow-sm">
             {/* File Header */}
-            <div className="flex items-center justify-between px-4 py-2.5 bg-[#161b22] border-b border-[#30363d]">
+            <div className="flex items-center justify-between px-4 py-2.5 bg-[#0c120e] border-b border-emerald-500/15">
               <div className="flex items-center gap-2">
-                <FileCode className="w-4 h-4 text-indigo-400" />
-                <span className="font-mono text-sm font-semibold text-white">{file.filename}</span>
+                <FileCode className="w-4 h-4 text-emerald-400" />
+                <span className="font-mono text-xs font-semibold text-white">{file.filename}</span>
               </div>
               <button
                 onClick={() => {
@@ -111,7 +111,7 @@ export function GitDiffViewer({ diffText, filesChanged = [], onAddComment }: Git
                   setCopiedFile(file.filename);
                   setTimeout(() => setCopiedFile(null), 2000);
                 }}
-                className="text-xs text-[#8b949e] hover:text-white transition-colors flex items-center gap-1"
+                className="text-xs text-[#91a897] hover:text-emerald-300 transition-colors flex items-center gap-1 font-mono text-[11px]"
               >
                 {copiedFile === file.filename ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : null}
                 <span>Copy path</span>
@@ -119,10 +119,10 @@ export function GitDiffViewer({ diffText, filesChanged = [], onAddComment }: Git
             </div>
 
             {/* Hunks & Lines */}
-            <div className="font-mono text-xs overflow-x-auto divide-y divide-[#21262d]">
+            <div className="font-mono text-xs overflow-x-auto divide-y divide-emerald-500/10">
               {file.hunks.map((hunk, hIdx) => (
                 <div key={hIdx}>
-                  <div className="px-4 py-1.5 bg-[#1f242c]/70 text-[#8b949e] text-[11px] font-semibold">
+                  <div className="px-4 py-1.5 bg-[#080d0a] text-[#91a897] text-[11px] font-semibold border-b border-emerald-500/10">
                     {hunk.header}
                   </div>
                   <div>
@@ -131,7 +131,7 @@ export function GitDiffViewer({ diffText, filesChanged = [], onAddComment }: Git
                       return (
                         <div key={lIdx} className="group relative">
                           <div
-                            className={`flex items-start px-2 py-0.5 leading-5 hover:bg-[#21262d]/50 transition-colors ${
+                            className={`flex items-start px-2 py-0.5 leading-5 hover:bg-emerald-500/5 transition-colors ${
                               line.type === 'add'
                                 ? 'diff-line-added'
                                 : line.type === 'del'
@@ -140,11 +140,11 @@ export function GitDiffViewer({ diffText, filesChanged = [], onAddComment }: Git
                             }`}
                           >
                             {/* Old line num */}
-                            <span className="w-10 text-right select-none pr-3 text-[#484f58]">
+                            <span className="w-10 text-right select-none pr-3 text-[#526657]">
                               {line.oldNum || ''}
                             </span>
                             {/* New line num */}
-                            <span className="w-10 text-right select-none pr-3 text-[#484f58]">
+                            <span className="w-10 text-right select-none pr-3 text-[#526657]">
                               {line.newNum || ''}
                             </span>
                             {/* Diff sign indicator */}
@@ -152,14 +152,14 @@ export function GitDiffViewer({ diffText, filesChanged = [], onAddComment }: Git
                               {line.type === 'add' ? '+' : line.type === 'del' ? '-' : ' '}
                             </span>
                             {/* Line content */}
-                            <span className="flex-1 whitespace-pre pl-1 text-[#f0f6fc]">
+                            <span className="flex-1 whitespace-pre pl-1 text-[#f0f7f2]">
                               {line.text}
                             </span>
 
                             {/* Add review comment button on hover */}
                             <button
                               onClick={() => setCommentingLine({ file: file.filename, line: line.newNum || line.oldNum || 1 })}
-                              className="opacity-0 group-hover:opacity-100 px-1.5 py-0.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded text-[10px] ml-2 flex items-center gap-1 transition-opacity"
+                              className="opacity-0 group-hover:opacity-100 px-1.5 py-0.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-[10px] ml-2 flex items-center gap-1 transition-opacity"
                               title="Add line review comment"
                             >
                               <Plus className="w-3 h-3" />
@@ -168,23 +168,23 @@ export function GitDiffViewer({ diffText, filesChanged = [], onAddComment }: Git
 
                           {/* Inline comment form */}
                           {isCommenting && (
-                            <div className="p-3 bg-[#161b22] border-y border-indigo-500/40 my-1 ml-24 mr-4 rounded-md">
+                            <div className="p-3 bg-[#080d0a] border border-emerald-500/30 my-1 ml-24 mr-4 rounded-xl shadow-lg">
                               <textarea
                                 value={commentInput}
                                 onChange={(e) => setCommentInput(e.target.value)}
                                 placeholder="Leave a review comment on this line..."
-                                className="w-full p-2 bg-[#0d1117] border border-[#30363d] rounded-md text-xs text-white focus:outline-none focus:border-indigo-400 h-20"
+                                className="w-full p-2 bg-[#050806] border border-emerald-500/20 rounded-lg text-xs text-white placeholder-[#91a897]/60 focus:outline-none focus:border-emerald-500/50 h-20 shadow-inner"
                               />
                               <div className="flex items-center justify-end gap-2 mt-2">
                                 <button
                                   onClick={() => setCommentingLine(null)}
-                                  className="px-3 py-1 text-xs text-[#8b949e] hover:text-white"
+                                  className="px-3 py-1 text-xs text-[#91a897] hover:text-white"
                                 >
                                   Cancel
                                 </button>
                                 <button
                                   onClick={() => handleSaveComment(file.filename, line.newNum || line.oldNum || 1)}
-                                  className="px-3 py-1 text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white rounded"
+                                  className="px-3 py-1 text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg shadow-sm"
                                 >
                                   Comment
                                 </button>

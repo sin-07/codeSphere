@@ -9,18 +9,13 @@ import { CloneModal } from '@/components/CloneModal';
 import { CommandPalette } from '@/components/CommandPalette';
 import { 
   GitBranch, 
-  Download, 
-  Plus, 
   Terminal, 
   BookOpen, 
   Code2, 
-  FileText,
   ChevronDown,
-  Sparkles
 } from 'lucide-react';
 import { fetchRepoDetails, fetchBranches, fetchCommits, fetchTree, fetchBlob } from '@/lib/api';
 import { TreeEntry, CommitInfo } from '@/types';
-import { GsapGlowCard, GsapStagger } from '@/components/animations';
 
 export default function RepoCodePage() {
   const params = useParams();
@@ -97,7 +92,7 @@ export default function RepoCodePage() {
   }, [owner, repo, currentBranch]);
 
   return (
-    <div className="min-h-screen bg-[#000000] text-[#f0faf0] flex flex-col selection:bg-[#00ff66]/20 selection:text-[#00ff66]">
+    <div className="min-h-screen bg-[#050806] text-[#f0f7f2] flex flex-col selection:bg-emerald-500/25 selection:text-emerald-200">
       <Navbar onOpenSearch={() => setIsCommandOpen(true)} />
       <CommandPalette isOpen={isCommandOpen} onClose={() => setIsCommandOpen(false)} />
 
@@ -118,16 +113,16 @@ export default function RepoCodePage() {
             <div className="relative">
               <button
                 onClick={() => setBranchDropdownOpen(!branchDropdownOpen)}
-                className="flex items-center gap-2 px-3 py-1.5 bg-[#040604] hover:bg-[#080c08] border border-[#1a2c1a] hover:border-[#00ff66]/40 rounded-lg text-xs font-semibold text-white transition-all shadow-[0_0_10px_rgba(0,0,0,0.5)]"
+                className="flex items-center gap-2 px-3 py-1.5 bg-[#0c120e] hover:bg-[#121c15] border border-emerald-500/20 hover:border-emerald-500/40 rounded-lg text-xs font-medium text-white transition-all shadow-sm"
               >
-                <GitBranch className="w-3.5 h-3.5 text-[#00ff66]" />
+                <GitBranch className="w-3.5 h-3.5 text-emerald-400" />
                 <span className="font-mono">{currentBranch}</span>
-                <ChevronDown className="w-3 h-3 text-[#86a686]" />
+                <ChevronDown className="w-3 h-3 text-[#91a897]" />
               </button>
 
               {branchDropdownOpen && (
-                <div className="absolute left-0 mt-2 w-56 bg-[#040604] border border-[#1a2c1a] rounded-xl shadow-[0_10px_35px_rgba(0,0,0,0.95)] py-1 z-50 text-xs">
-                  <div className="px-3 py-2 font-mono text-[#86a686] border-b border-[#1a2c1a] text-[11px]">
+                <div className="absolute left-0 mt-2 w-56 bg-[#080d0a] border border-emerald-500/20 rounded-xl shadow-[0_12px_36px_rgba(0,0,0,0.8)] py-1 z-50 text-xs animate-fadeIn">
+                  <div className="px-3 py-2 font-mono text-[#91a897] border-b border-emerald-500/15 text-[11px]">
                     SWITCH BRANCH
                   </div>
                   {branches.map(b => (
@@ -137,8 +132,8 @@ export default function RepoCodePage() {
                         setCurrentBranch(b);
                         setBranchDropdownOpen(false);
                       }}
-                      className={`w-full text-left px-3 py-2 hover:bg-[#00ff66]/10 flex items-center justify-between font-mono ${
-                        b === currentBranch ? 'text-[#00ff66] font-bold' : 'text-[#c2d6c2]'
+                      className={`w-full text-left px-3 py-2 hover:bg-emerald-500/10 flex items-center justify-between font-mono transition-colors ${
+                        b === currentBranch ? 'text-emerald-400 font-semibold bg-emerald-500/5' : 'text-[#d1e0d5]'
                       }`}
                     >
                       <span>{b}</span>
@@ -149,8 +144,8 @@ export default function RepoCodePage() {
               )}
             </div>
 
-            <span className="text-xs text-[#86a686] font-mono">
-              <strong className="text-[#00ff66]">{branches.length}</strong> branches
+            <span className="text-xs text-[#91a897] font-mono">
+              <strong className="text-emerald-400">{branches.length}</strong> branches
             </span>
           </div>
 
@@ -158,20 +153,20 @@ export default function RepoCodePage() {
             {/* Open in Web IDE Button */}
             <a
               href={`/${owner}/${repo}/edit/${currentBranch}/README.md`}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#040604] hover:bg-[#080c08] border border-[#1a2c1a] hover:border-[#00ff66]/50 text-xs font-semibold text-white rounded-lg transition-all shadow-[0_0_10px_rgba(0,0,0,0.5)] group"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0c120e] hover:bg-[#121c15] border border-emerald-500/20 hover:border-emerald-500/40 text-xs font-medium text-[#d1e0d5] hover:text-white rounded-lg transition-all shadow-sm group"
             >
-              <Code2 className="w-3.5 h-3.5 text-[#00ff66] group-hover:scale-110 transition-transform" />
+              <Code2 className="w-3.5 h-3.5 text-emerald-400 group-hover:scale-110 transition-transform" />
               <span>Web IDE</span>
             </a>
 
             {/* Clone Button */}
             <button
               onClick={() => setIsCloneOpen(!isCloneOpen)}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#00ff66] hover:bg-[#22c55e] text-black text-xs font-bold rounded-lg transition-all shadow-[0_0_15px_rgba(0,255,102,0.35)] hover:shadow-[0_0_25px_rgba(0,255,102,0.55)]"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg transition-all shadow-[0_1px_15px_rgba(16,185,129,0.3)] hover:shadow-[0_1px_20px_rgba(16,185,129,0.45)]"
             >
-              <Terminal className="w-3.5 h-3.5 stroke-[2.5]" />
+              <Terminal className="w-3.5 h-3.5" />
               <span>Code / Clone</span>
-              <ChevronDown className="w-3 h-3 stroke-[2.5]" />
+              <ChevronDown className="w-3 h-3 opacity-80" />
             </button>
 
             {/* Clone Modal */}
@@ -195,15 +190,15 @@ export default function RepoCodePage() {
 
         {/* README.md Preview Container */}
         {readmeContent && (
-          <div className="border border-[#1a2c1a] rounded-xl overflow-hidden bg-[#040604]/90 backdrop-blur-md shadow-[0_4px_25px_rgba(0,0,0,0.7)]">
-            <div className="flex items-center justify-between px-4 py-3 bg-[#000000] border-b border-[#1a2c1a] text-xs font-semibold text-white">
+          <div className="border border-emerald-500/15 rounded-xl overflow-hidden bg-[#080d0a]/85 backdrop-blur-xl shadow-[0_8px_30px_-6px_rgba(0,0,0,0.5)]">
+            <div className="flex items-center justify-between px-4 py-3 bg-[#0c120e] border-b border-emerald-500/15 text-xs font-semibold text-white">
               <div className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-[#00ff66]" />
+                <BookOpen className="w-4 h-4 text-emerald-400" />
                 <span className="font-mono">README.md</span>
               </div>
-              <span className="text-[11px] font-mono text-[#86a686]">RAW PREVIEW</span>
+              <span className="text-[11px] font-mono text-[#91a897]">RAW PREVIEW</span>
             </div>
-            <div className="p-6 md:p-8 prose prose-invert max-w-none text-[#c2d6c2] text-sm leading-relaxed whitespace-pre-wrap font-sans">
+            <div className="p-6 md:p-8 text-[#d1e0d5] text-sm leading-relaxed whitespace-pre-wrap font-sans">
               {readmeContent}
             </div>
           </div>

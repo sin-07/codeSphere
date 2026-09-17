@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
@@ -30,14 +30,14 @@ export default function WebIDEPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0d1117] flex items-center justify-center text-[#8b949e] font-mono text-sm">
+      <div className="min-h-screen bg-[#050806] flex items-center justify-center text-[#91a897] font-mono text-sm">
         Initializing CodeSphere Browser IDE...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0d1117] flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-[#050806] flex flex-col overflow-hidden">
       <Navbar />
       <BrowserIDE
         owner={owner}

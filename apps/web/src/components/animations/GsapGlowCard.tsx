@@ -12,7 +12,7 @@ interface GsapGlowCardProps extends React.HTMLAttributes<HTMLDivElement> {
 export function GsapGlowCard({
   children,
   className = '',
-  glowColor = 'rgba(0, 255, 102, 0.15)',
+  glowColor = 'rgba(16, 185, 129, 0.12)',
   ...props
 }: GsapGlowCardProps) {
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -24,27 +24,25 @@ export function GsapGlowCard({
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Move spotlight smoothly
     gsap.to(glowRef.current, {
       x,
       y,
       opacity: 1,
-      duration: 0.3,
+      duration: 0.25,
       ease: 'power2.out',
     });
 
-    // Subtle 3D card tilt
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -4;
-    const rotateY = ((x - centerX) / centerX) * 4;
+    const rotateX = ((y - centerY) / centerY) * -2.5;
+    const rotateY = ((x - centerX) / centerX) * 2.5;
 
     gsap.to(cardRef.current, {
       rotateX,
       rotateY,
-      duration: 0.4,
+      duration: 0.35,
       ease: 'power1.out',
-      transformPerspective: 1000,
+      transformPerspective: 1200,
     });
   };
 
@@ -53,15 +51,15 @@ export function GsapGlowCard({
 
     gsap.to(glowRef.current, {
       opacity: 0,
-      duration: 0.5,
+      duration: 0.4,
       ease: 'power2.out',
     });
 
     gsap.to(cardRef.current, {
       rotateX: 0,
       rotateY: 0,
-      duration: 0.6,
-      ease: 'elastic.out(1, 0.5)',
+      duration: 0.5,
+      ease: 'power2.out',
     });
   };
 
@@ -70,18 +68,17 @@ export function GsapGlowCard({
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`relative overflow-hidden rounded-xl border border-[#1a2c1a] bg-[#040604]/90 backdrop-blur-md transition-all duration-300 hover:border-[#00ff66]/50 hover:shadow-[0_0_30px_rgba(0,255,102,0.2)] ${className}`}
+      className={`relative overflow-hidden rounded-xl border border-emerald-500/15 bg-[#080d0a]/80 backdrop-blur-xl transition-all duration-200 hover:border-emerald-500/35 hover:shadow-[0_8px_30px_-6px_rgba(16,185,129,0.12)] ${className}`}
       {...props}
     >
-      {/* Mouse-following spotlight */}
+      {/* Subtle mouse spotlight */}
       <div
         ref={glowRef}
-        className="pointer-events-none absolute -left-32 -top-32 h-64 w-64 rounded-full opacity-0 blur-2xl transition-opacity"
+        className="pointer-events-none absolute -left-32 -top-32 h-64 w-64 rounded-full opacity-0 blur-3xl transition-opacity"
         style={{
           background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`,
         }}
       />
-      {/* Card contents */}
       <div className="relative z-10">{children}</div>
     </div>
   );

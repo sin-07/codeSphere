@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import { Navbar } from '@/components/Navbar';
 import { RepoHeader } from '@/components/RepoHeader';
 import { InteractiveArchMap } from '@/components/InteractiveArchMap';
-import { Network, Sparkles, Layers, Cpu, CheckCircle } from 'lucide-react';
+import { Network, Sparkles } from 'lucide-react';
 import { aiArchGraph } from '@/lib/api';
 
 export default function ArchitecturePage() {
@@ -51,17 +51,17 @@ export default function ArchitecturePage() {
   }, [owner, repo]);
 
   return (
-    <div className="min-h-screen bg-[#0d1117] flex flex-col">
+    <div className="min-h-screen bg-[#050806] text-[#f0f7f2] flex flex-col selection:bg-emerald-500/25 selection:text-emerald-200">
       <Navbar />
       <RepoHeader owner={owner} repo={repo} activeTab="arch" />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-6 space-y-6">
-        <div className="p-6 rounded-2xl bg-[#161b22] border border-[#30363d] space-y-2">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-6 space-y-6 relative z-10">
+        <div className="p-6 rounded-2xl bg-[#080d0a]/85 backdrop-blur-xl border border-emerald-500/15 space-y-2 shadow-sm">
           <div className="flex items-center gap-2.5">
-            <Network className="w-5 h-5 text-indigo-400" />
+            <Network className="w-5 h-5 text-emerald-400" />
             <h1 className="text-xl font-bold text-white">Interactive Architecture Dependency Map</h1>
           </div>
-          <p className="text-xs text-[#8b949e]">
+          <p className="text-xs text-[#91a897]">
             Auto-synthesized module topology mapping files, imports, exported interfaces, and architectural boundaries.
           </p>
         </div>

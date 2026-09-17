@@ -10,49 +10,61 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        dark: {
-          950: "#000000", // Pure pitch black
-          900: "#040604", // Obsidian deep
-          850: "#080c08", // Cyber surface
-          800: "#0d140d", // Card surface
-          700: "#131f13", // Hover surface
-          600: "#1a2c1a", // Deep border
-          500: "#274227", // Medium border
-          400: "#4e774e", // Subtle text
-          300: "#86a686", // Secondary text
-          200: "#c2d6c2", // High contrast text
-          100: "#f0faf0", // Crisp pure white-green
+        obsidian: {
+          950: "#050806", // Deepest space black
+          900: "#080d0a", // Panel background
+          850: "#0c120e", // Card surface
+          800: "#111813", // Hover card surface
+          700: "#18221a", // Deep active
+          600: "#223025", // Soft border
+          500: "#324838", // Medium border
+          400: "#607d68", // Subtle text
+          300: "#91a897", // Secondary text
+          200: "#c7d8cb", // Primary body text
+          100: "#f0f7f2", // Crisp white
         },
-        cyber: {
+        dark: {
+          950: "#050806",
+          900: "#080d0a",
+          850: "#0c120e",
+          800: "#111813",
+          700: "#18221a",
+          600: "#223025",
+          500: "#324838",
+          400: "#607d68",
+          300: "#91a897",
+          200: "#c7d8cb",
+          100: "#f0f7f2",
+        },
+        emerald: {
           50: "#f0fdf4",
           100: "#dcfce7",
           200: "#bbf7d0",
-          300: "#86efac",
-          400: "#4ade80",
-          500: "#10b981", // Emerald base
+          300: "#6ee7b7",
+          400: "#34d399",
+          500: "#10b981", // Linear emerald primary
           600: "#059669",
-          neon: "#00ff66", // High-voltage Matrix neon
-          matrix: "#00e575",
-          dim: "#003b17",
+          700: "#047857",
+          800: "#065f46",
+          900: "#064e3b",
+          950: "#022c22",
         },
-        brand: {
-          50: "#f0fdf4",
-          100: "#dcfce7",
-          400: "#4ade80",
-          500: "#10b981",
-          600: "#00e575",
-          700: "#00ff66",
+        cyber: {
+          neon: "#10b981",
+          matrix: "#34d399",
+          glow: "rgba(16, 185, 129, 0.2)",
         },
       },
       boxShadow: {
-        'neon-sm': '0 0 10px rgba(0, 255, 102, 0.25)',
-        'neon-md': '0 0 20px rgba(0, 255, 102, 0.4)',
-        'neon-lg': '0 0 35px rgba(0, 255, 102, 0.55)',
-        'neon-border': '0 0 0 1px rgba(0, 255, 102, 0.35)',
+        'emerald-sm': '0 0 15px rgba(16, 185, 129, 0.15)',
+        'emerald-md': '0 0 25px rgba(16, 185, 129, 0.22)',
+        'emerald-lg': '0 0 45px rgba(16, 185, 129, 0.3)',
+        'card-glow': '0 0 0 1px rgba(16, 185, 129, 0.15), 0 8px 24px -4px rgba(0, 0, 0, 0.6)',
+        'card-hover': '0 0 0 1px rgba(16, 185, 129, 0.35), 0 12px 32px -4px rgba(16, 185, 129, 0.15)',
       },
       fontFamily: {
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
       animation: {
         'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',

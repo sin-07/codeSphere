@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
@@ -92,24 +92,24 @@ export default function IssueDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d1117] flex flex-col">
+    <div className="min-h-screen bg-[#050806] flex flex-col">
       <Navbar />
       <RepoHeader owner={owner} repo={repo} activeTab="issues" />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-6 space-y-6">
         <a
           href={`/${owner}/${repo}/issues`}
-          className="inline-flex items-center gap-1 text-xs text-[#8b949e] hover:text-white transition-colors"
+          className="inline-flex items-center gap-1 text-xs text-[#91a897] hover:text-white transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to issues list</span>
         </a>
 
         {/* Issue Header */}
-        <div className="space-y-2 pb-4 border-b border-[#30363d]">
+        <div className="space-y-2 pb-4 border-b border-[rgba(16,185,129,0.15)]">
           <h1 className="text-2xl font-bold text-white flex items-center gap-3">
             <span>{issue?.title}</span>
-            <span className="text-[#8b949e] font-normal font-mono">#{issueNumber}</span>
+            <span className="text-[#91a897] font-normal font-mono">#{issueNumber}</span>
           </h1>
 
           <div className="flex flex-wrap items-center gap-3 text-xs">
@@ -123,15 +123,15 @@ export default function IssueDetailPage() {
               </span>
             )}
 
-            <span className="text-[#8b949e]">
+            <span className="text-[#91a897]">
               <strong className="text-white">{issue?.author}</strong> opened this issue on {new Date(issue?.createdAt || Date.now()).toLocaleDateString()} • {comments.length} comments
             </span>
           </div>
         </div>
 
         {/* Issue Body */}
-        <div className="border border-[#30363d] rounded-xl overflow-hidden bg-[#161b22]">
-          <div className="p-3 bg-[#1c2128] border-b border-[#30363d] text-xs text-[#8b949e] flex items-center justify-between">
+        <div className="border border-[rgba(16,185,129,0.15)] rounded-xl overflow-hidden bg-[#080d0a]">
+          <div className="p-3 bg-[#1c2128] border-b border-[rgba(16,185,129,0.15)] text-xs text-[#91a897] flex items-center justify-between">
             <span className="font-semibold text-white">{issue?.author} commented</span>
             <span>{new Date(issue?.createdAt || Date.now()).toLocaleDateString()}</span>
           </div>
@@ -143,8 +143,8 @@ export default function IssueDetailPage() {
         {/* Comments Thread */}
         <div className="space-y-4">
           {comments.map((c, idx) => (
-            <div key={idx} className="border border-[#30363d] rounded-xl overflow-hidden bg-[#161b22]">
-              <div className="p-3 bg-[#1c2128] border-b border-[#30363d] text-xs text-[#8b949e] flex items-center justify-between">
+            <div key={idx} className="border border-[rgba(16,185,129,0.15)] rounded-xl overflow-hidden bg-[#080d0a]">
+              <div className="p-3 bg-[#1c2128] border-b border-[rgba(16,185,129,0.15)] text-xs text-[#91a897] flex items-center justify-between">
                 <span className="font-semibold text-white">{c.author}</span>
                 <span>{new Date(c.createdAt).toLocaleDateString()}</span>
               </div>
@@ -156,20 +156,20 @@ export default function IssueDetailPage() {
         </div>
 
         {/* Reply Box */}
-        <form onSubmit={handleAddComment} className="border border-[#30363d] rounded-xl bg-[#161b22] p-4 space-y-3">
+        <form onSubmit={handleAddComment} className="border border-[rgba(16,185,129,0.15)] rounded-xl bg-[#080d0a] p-4 space-y-3">
           <textarea
             value={commentText}
             onChange={(e) => setCommentText(e.target.value)}
             placeholder="Leave a comment on this issue..."
             rows={4}
-            className="w-full p-3 bg-[#0d1117] border border-[#30363d] rounded-lg text-xs text-white focus:outline-none focus:border-indigo-400 resize-none"
+            className="w-full p-3 bg-[#050806] border border-[rgba(16,185,129,0.15)] rounded-lg text-xs text-white focus:outline-none focus:border-emerald-500/50 resize-none"
           />
 
           <div className="flex items-center justify-between">
             <button
               type="button"
               onClick={toggleStatus}
-              className="px-4 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#30363d] text-xs font-semibold text-slate-200 rounded-lg transition-colors"
+              className="px-4 py-1.5 bg-[#0c120e] hover:bg-[rgba(16,185,129,0.15)] border border-[rgba(16,185,129,0.15)] text-xs font-semibold text-slate-200 rounded-lg transition-colors"
             >
               {issue?.status === 'open' ? 'Close issue' : 'Reopen issue'}
             </button>
@@ -177,7 +177,7 @@ export default function IssueDetailPage() {
             <button
               type="submit"
               disabled={isSubmitting || !commentText.trim()}
-              className="px-4 py-1.5 bg-[#238636] hover:bg-[#2ea043] text-xs font-semibold text-white rounded-lg transition-colors disabled:opacity-50"
+              className="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white rounded-lg transition-colors disabled:opacity-50"
             >
               {isSubmitting ? 'Posting...' : 'Comment'}
             </button>

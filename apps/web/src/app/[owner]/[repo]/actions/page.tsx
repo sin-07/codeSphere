@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
@@ -120,20 +120,20 @@ export default function ActionsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d1117] flex flex-col">
+    <div className="min-h-screen bg-[#050806] flex flex-col">
       <Navbar />
       <RepoHeader owner={owner} repo={repo} activeTab="actions" />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-6 space-y-6">
         {/* Actions Header */}
-        <div className="flex flex-wrap items-center justify-between gap-4 p-5 bg-[#161b22] border border-[#30363d] rounded-2xl">
+        <div className="flex flex-wrap items-center justify-between gap-4 p-5 bg-[#080d0a] border border-[rgba(16,185,129,0.15)] rounded-2xl">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-cyan-950/80 border border-cyan-500/50 flex items-center justify-center">
-              <PlayCircle className="w-5 h-5 text-cyan-400" />
+            <div className="w-10 h-10 rounded-xl bg-cyan-950/80 border border-emerald-500/40 flex items-center justify-center">
+              <PlayCircle className="w-5 h-5 text-emerald-400" />
             </div>
             <div>
               <h1 className="text-lg font-bold text-white">CI/CD Pipeline Engine</h1>
-              <p className="text-xs text-[#8b949e]">
+              <p className="text-xs text-[#91a897]">
                 Automated continuous integration, test verification, and deployment pipelines.
               </p>
             </div>
@@ -142,7 +142,7 @@ export default function ActionsPage() {
           <button
             onClick={handleTriggerRun}
             disabled={isTriggering}
-            className="flex items-center gap-2 px-4 py-2 bg-[#238636] hover:bg-[#2ea043] rounded-lg text-xs font-semibold text-white transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 rounded-lg text-xs font-semibold text-white transition-colors disabled:opacity-50"
           >
             <Play className="w-3.5 h-3.5" />
             <span>{isTriggering ? 'Scheduling run...' : 'Run workflow manually'}</span>
@@ -152,12 +152,12 @@ export default function ActionsPage() {
         {/* Pipeline Runs Grid: List on Left, Live Logs on Right */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left: Runs List */}
-          <div className="lg:col-span-1 border border-[#30363d] rounded-xl bg-[#161b22] overflow-hidden">
-            <div className="p-3 bg-[#1c2128] border-b border-[#30363d] text-xs font-semibold text-[#8b949e]">
+          <div className="lg:col-span-1 border border-[rgba(16,185,129,0.15)] rounded-xl bg-[#080d0a] overflow-hidden">
+            <div className="p-3 bg-[#1c2128] border-b border-[rgba(16,185,129,0.15)] text-xs font-semibold text-[#91a897]">
               Recent Workflow Runs ({runs.length})
             </div>
 
-            <div className="divide-y divide-[#21262d]">
+            <div className="divide-y divide-[#0c120e]">
               {runs.map(run => (
                 <div
                   key={run._id}
@@ -166,7 +166,7 @@ export default function ActionsPage() {
                     if (run.stages?.[0]?.steps?.[0]) setSelectedStep(run.stages[0].steps[0]);
                   }}
                   className={`p-3.5 cursor-pointer transition-colors ${
-                    selectedRun?._id === run._id ? 'bg-[#21262d] border-l-2 border-cyan-400' : 'hover:bg-[#21262d]/40'
+                    selectedRun?._id === run._id ? 'bg-[#0c120e] border-l-2 border-cyan-400' : 'hover:bg-[#0c120e]/40'
                   }`}
                 >
                   <div className="flex items-center justify-between text-xs mb-1">
@@ -174,7 +174,7 @@ export default function ActionsPage() {
                       {run.status === 'success' ? (
                         <CheckCircle className="w-4 h-4 text-emerald-400" />
                       ) : run.status === 'running' ? (
-                        <RotateCw className="w-4 h-4 text-cyan-400 animate-spin" />
+                        <RotateCw className="w-4 h-4 text-emerald-400 animate-spin" />
                       ) : (
                         <XCircle className="w-4 h-4 text-rose-400" />
                       )}
@@ -184,7 +184,7 @@ export default function ActionsPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between text-[11px] text-[#8b949e]">
+                  <div className="flex items-center justify-between text-[11px] text-[#91a897]">
                     <span className="font-mono">{run.branch}</span>
                     <span>{run.durationSeconds || 16}s</span>
                   </div>
@@ -198,10 +198,10 @@ export default function ActionsPage() {
             {selectedRun && (
               <>
                 {/* Stages & Steps Diagram */}
-                <div className="p-4 bg-[#161b22] border border-[#30363d] rounded-xl space-y-3">
+                <div className="p-4 bg-[#080d0a] border border-[rgba(16,185,129,0.15)] rounded-xl space-y-3">
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-bold text-white flex items-center gap-2">
-                      <Layers className="w-4 h-4 text-indigo-400" />
+                      <Layers className="w-4 h-4 text-emerald-400" />
                       <span>Pipeline Stages: {selectedRun.stages?.[0]?.name || 'Build & Test'}</span>
                     </span>
                     <span className="text-emerald-400 font-semibold font-mono">
@@ -217,8 +217,8 @@ export default function ActionsPage() {
                         onClick={() => setSelectedStep(step)}
                         className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
                           selectedStep?.name === step.name
-                            ? 'bg-cyan-950 text-cyan-300 border border-cyan-500/50 shadow-md'
-                            : 'bg-[#0d1117] border border-[#30363d] text-[#8b949e] hover:text-white'
+                            ? 'bg-cyan-950 text-emerald-300 border border-emerald-500/40 shadow-md'
+                            : 'bg-[#050806] border border-[rgba(16,185,129,0.15)] text-[#91a897] hover:text-white'
                         }`}
                       >
                         <Check className="w-3.5 h-3.5 text-emerald-400" />
@@ -230,9 +230,9 @@ export default function ActionsPage() {
                 </div>
 
                 {/* Step Terminal Output Logs */}
-                <div className="border border-[#30363d] rounded-xl bg-[#090d13] overflow-hidden">
-                  <div className="flex items-center justify-between px-4 py-2 bg-[#161b22] border-b border-[#30363d] text-xs font-mono">
-                    <div className="flex items-center gap-2 text-[#c9d1d9]">
+                <div className="border border-[rgba(16,185,129,0.15)] rounded-xl bg-[#090d13] overflow-hidden">
+                  <div className="flex items-center justify-between px-4 py-2 bg-[#080d0a] border-b border-[rgba(16,185,129,0.15)] text-xs font-mono">
+                    <div className="flex items-center gap-2 text-[#d1e0d5]">
                       <Terminal className="w-4 h-4 text-emerald-400" />
                       <span>{selectedStep?.command || 'runner script'}</span>
                     </div>
