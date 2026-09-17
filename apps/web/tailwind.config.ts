@@ -11,34 +11,44 @@ const config: Config = {
     extend: {
       colors: {
         dark: {
-          950: "#090d13",
-          900: "#0d1117",
-          850: "#131922",
-          800: "#161b22",
-          700: "#21262d",
-          600: "#30363d",
-          500: "#484f58",
-          400: "#8b949e",
-          300: "#c9d1d9",
-          200: "#e6edf3",
-          100: "#f0f6fc",
+          950: "#000000", // Pure pitch black
+          900: "#040604", // Obsidian deep
+          850: "#080c08", // Cyber surface
+          800: "#0d140d", // Card surface
+          700: "#131f13", // Hover surface
+          600: "#1a2c1a", // Deep border
+          500: "#274227", // Medium border
+          400: "#4e774e", // Subtle text
+          300: "#86a686", // Secondary text
+          200: "#c2d6c2", // High contrast text
+          100: "#f0faf0", // Crisp pure white-green
+        },
+        cyber: {
+          50: "#f0fdf4",
+          100: "#dcfce7",
+          200: "#bbf7d0",
+          300: "#86efac",
+          400: "#4ade80",
+          500: "#10b981", // Emerald base
+          600: "#059669",
+          neon: "#00ff66", // High-voltage Matrix neon
+          matrix: "#00e575",
+          dim: "#003b17",
         },
         brand: {
-          50: "#eef2ff",
-          100: "#e0e7ff",
-          400: "#818cf8",
-          500: "#6366f1",
-          600: "#4f46e5",
-          700: "#4338ca",
-        },
-        cyanGlow: {
-          400: "#22d3ee",
-          500: "#06b6d4",
-        },
-        emeraldGlow: {
-          400: "#34d399",
+          50: "#f0fdf4",
+          100: "#dcfce7",
+          400: "#4ade80",
           500: "#10b981",
+          600: "#00e575",
+          700: "#00ff66",
         },
+      },
+      boxShadow: {
+        'neon-sm': '0 0 10px rgba(0, 255, 102, 0.25)',
+        'neon-md': '0 0 20px rgba(0, 255, 102, 0.4)',
+        'neon-lg': '0 0 35px rgba(0, 255, 102, 0.55)',
+        'neon-border': '0 0 0 1px rgba(0, 255, 102, 0.35)',
       },
       fontFamily: {
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
@@ -46,6 +56,7 @@ const config: Config = {
       },
       animation: {
         'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'laser-sweep': 'sweep 2.5s ease-in-out infinite',
       }
     },
   },

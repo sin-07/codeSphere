@@ -15,11 +15,16 @@ import {
   Network, 
   ArrowRight,
   TrendingUp,
-  ShieldCheck,
-  User
+  ShieldCheck, 
+  User,
+  Cpu,
+  Zap,
+  Activity,
+  Code2
 } from 'lucide-react';
 import { fetchRepos } from '@/lib/api';
 import { Repository } from '@/types';
+import { GsapStagger, GsapGlowCard, GsapCounter, GsapPulseBeacon } from '@/components/animations';
 
 export default function HomePage() {
   const [isCommandOpen, setIsCommandOpen] = useState(false);
@@ -30,7 +35,6 @@ export default function HomePage() {
     fetchRepos()
       .then((data) => setRepos(data || []))
       .catch(() => {
-        // Default demo repos if API not yet populated
         setRepos([
           {
             _id: '1',
@@ -72,197 +76,263 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0d1117] flex flex-col">
+    <div className="min-h-screen bg-[#000000] text-[#f0faf0] flex flex-col selection:bg-[#00ff66]/20 selection:text-[#00ff66]">
       <Navbar onOpenSearch={() => setIsCommandOpen(true)} />
       <CommandPalette isOpen={isCommandOpen} onClose={() => setIsCommandOpen(false)} />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 md:px-8 py-8 relative z-10">
+        {/* Metric Quick Bar with GSAP Counters */}
+        <GsapStagger className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <GsapGlowCard className="p-4 border-[#1a2c1a]">
+            <div className="flex items-center justify-between text-[#86a686] mb-1">
+              <span className="text-xs font-mono uppercase tracking-wider">Repositories</span>
+              <BookOpen className="w-4 h-4 text-[#00ff66]" />
+            </div>
+            <div className="text-2xl font-black text-white font-mono flex items-baseline gap-1">
+              <GsapCounter value={repos.length || 2} duration={1.5} />
+              <span className="text-xs font-normal text-[#00ff66]">ACTIVE</span>
+            </div>
+          </GsapGlowCard>
+
+          <GsapGlowCard className="p-4 border-[#1a2c1a]">
+            <div className="flex items-center justify-between text-[#86a686] mb-1">
+              <span className="text-xs font-mono uppercase tracking-wider">AI Operations</span>
+              <Cpu className="w-4 h-4 text-[#00ff66]" />
+            </div>
+            <div className="text-2xl font-black text-white font-mono flex items-baseline gap-1">
+              <GsapCounter value={1284} duration={2} />
+              <span className="text-xs font-normal text-[#00ff66]">OPS/DAY</span>
+            </div>
+          </GsapGlowCard>
+
+          <GsapGlowCard className="p-4 border-[#1a2c1a]">
+            <div className="flex items-center justify-between text-[#86a686] mb-1">
+              <span className="text-xs font-mono uppercase tracking-wider">Security Score</span>
+              <ShieldCheck className="w-4 h-4 text-[#00ff66]" />
+            </div>
+            <div className="text-2xl font-black text-[#00ff66] font-mono flex items-baseline gap-1">
+              <GsapCounter value={100} duration={1.8} suffix="%" />
+              <span className="text-xs font-normal text-[#86a686]">0 CVE</span>
+            </div>
+          </GsapGlowCard>
+
+          <GsapGlowCard className="p-4 border-[#1a2c1a]">
+            <div className="flex items-center justify-between text-[#86a686] mb-1">
+              <span className="text-xs font-mono uppercase tracking-wider">Pipeline Uptime</span>
+              <Zap className="w-4 h-4 text-[#00ff66]" />
+            </div>
+            <div className="text-2xl font-black text-white font-mono flex items-baseline gap-1">
+              <GsapCounter value={99.98} duration={2} decimals={2} suffix="%" />
+              <span className="text-xs font-normal text-[#00ff66]">PASS</span>
+            </div>
+          </GsapGlowCard>
+        </GsapStagger>
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Left Column: Recent Repositories */}
           <div className="lg:col-span-1 space-y-6">
-            <div className="bg-[#161b22] border border-[#30363d] rounded-xl p-4 space-y-4">
+            <GsapGlowCard className="p-4 space-y-4 border-[#1a2c1a]">
               <div className="flex items-center justify-between">
-                <h3 className="font-bold text-sm text-white">Top Repositories</h3>
+                <h3 className="font-bold text-sm text-white flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00ff66] shadow-[0_0_8px_#00ff66]" />
+                  <span>Top Repositories</span>
+                </h3>
                 <a
                   href="/new"
-                  className="flex items-center gap-1 px-2.5 py-1 bg-[#238636] hover:bg-[#2ea043] text-white text-xs font-semibold rounded-md transition-colors"
+                  className="flex items-center gap-1 px-2.5 py-1 bg-[#00ff66] hover:bg-[#22c55e] text-black text-xs font-bold rounded-md transition-all shadow-[0_0_10px_rgba(0,255,102,0.3)]"
                 >
-                  <Plus className="w-3.5 h-3.5" />
+                  <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                   <span>New</span>
                 </a>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 {repos.map((repo) => (
                   <a
                     key={repo.slug}
                     href={`/${repo.slug}`}
-                    className="flex items-center justify-between p-2 rounded-lg hover:bg-[#21262d] transition-colors group"
+                    className="flex items-center justify-between p-2.5 rounded-lg bg-[#000000]/60 border border-[#1a2c1a] hover:border-[#00ff66]/50 hover:bg-[#00ff66]/5 transition-all group"
                   >
-                    <div className="flex items-center gap-2 overflow-hidden">
-                      <BookOpen className="w-4 h-4 text-[#8b949e] group-hover:text-cyan-400 shrink-0" />
-                      <span className="font-medium text-xs text-white truncate">{repo.slug}</span>
+                    <div className="flex items-center gap-2.5 overflow-hidden">
+                      <BookOpen className="w-4 h-4 text-[#86a686] group-hover:text-[#00ff66] transition-colors shrink-0" />
+                      <span className="font-medium text-xs text-white group-hover:text-[#00ff66] transition-colors truncate">
+                        {repo.name}
+                      </span>
                     </div>
-                    <span className="text-[10px] text-[#8b949e] flex items-center gap-1">
-                      <Star className="w-3 h-3 text-amber-400" />
+                    <span className="text-[11px] font-mono text-[#86a686] group-hover:text-[#00ff66] flex items-center gap-1">
+                      <Star className="w-3 h-3 text-[#00ff66]" />
                       {repo.starsCount}
                     </span>
                   </a>
                 ))}
               </div>
-            </div>
+            </GsapGlowCard>
 
             {/* Organizations */}
-            <div className="bg-[#161b22] border border-[#30363d] rounded-xl p-4 space-y-3">
-              <h3 className="font-bold text-sm text-white">Your Organizations</h3>
+            <GsapGlowCard className="p-4 space-y-3 border-[#1a2c1a]">
+              <h3 className="font-bold text-sm text-white flex items-center justify-between">
+                <span>Organization</span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#00ff66]/10 text-[#00ff66] border border-[#00ff66]/30">
+                  VERIFIED
+                </span>
+              </h3>
               <a
                 href="/orgs/codesphere-labs"
-                className="flex items-center gap-2.5 p-2 rounded-lg hover:bg-[#21262d] transition-colors"
+                className="flex items-center gap-3 p-2.5 rounded-lg bg-[#000000]/60 border border-[#1a2c1a] hover:border-[#00ff66]/50 hover:bg-[#00ff66]/5 transition-all group"
               >
-                <div className="w-6 h-6 rounded-md bg-gradient-to-tr from-indigo-500 to-cyan-500 flex items-center justify-center font-bold text-xs text-white">
+                <div className="w-7 h-7 rounded-md bg-[#040604] border border-[#00ff66]/50 flex items-center justify-center font-bold text-xs text-[#00ff66] shadow-[0_0_10px_rgba(0,255,102,0.3)]">
                   C
                 </div>
                 <div className="text-xs">
-                  <p className="font-medium text-white">CodeSphere Labs</p>
-                  <span className="text-[#8b949e]">Enterprise Pro</span>
+                  <p className="font-semibold text-white group-hover:text-[#00ff66] transition-colors">CodeSphere Labs</p>
+                  <span className="text-[#86a686] font-mono text-[11px]">Enterprise Pro</span>
                 </div>
               </a>
-            </div>
+            </GsapGlowCard>
           </div>
 
           {/* Center Column: Intelligence Hero & Activity Feed */}
           <div className="lg:col-span-2 space-y-6">
             {/* AI Repository Brain Hero Banner */}
-            <div className="relative overflow-hidden rounded-2xl border border-indigo-500/30 bg-gradient-to-br from-[#161b22] via-[#111928] to-[#0f172a] p-6 shadow-2xl">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-              <div className="relative z-10 space-y-3">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/40 text-cyan-300 text-xs font-semibold">
-                  <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>Next-Gen AI Repository Intelligence</span>
+            <GsapGlowCard className="p-6 border-[#00ff66]/30 shadow-[0_0_35px_rgba(0,255,102,0.1)]">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00ff66]/10 border border-[#00ff66]/40 text-[#00ff66] text-xs font-mono font-semibold shadow-[0_0_10px_rgba(0,255,102,0.2)]">
+                  <Sparkles className="w-3.5 h-3.5 animate-pulse text-[#00ff66]" />
+                  <span>AI REPOSITORY BRAIN ACTIVE</span>
                 </div>
 
-                <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                  CodeSphere Developer Platform
+                <h1 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl font-sans">
+                  The AI-Autonomous <br />
+                  <span className="text-[#00ff66] neon-text-glow">Developer Platform</span>
                 </h1>
 
-                <p className="text-sm text-[#8b949e] leading-relaxed">
-                  Real Git repository hosting with instant clone/push/pull, real-time collaboration, browser IDE, CI/CD pipeline engine, and the autonomous AI Repository Brain.
+                <p className="text-sm text-[#86a686] leading-relaxed">
+                  Real bare Git repository hosting with instant clone/push/pull, real-time collaboration presence, browser Web IDE, CI/CD pipeline engine, and deep AST semantic search.
                 </p>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
                   <a
                     href="/demo-dev/codesphere-core/brain"
-                    className="flex flex-col items-center justify-center p-3 bg-[#161b22]/80 hover:bg-[#21262d] border border-[#30363d] rounded-xl text-center transition-all group"
+                    className="flex flex-col items-center justify-center p-3.5 bg-[#000000]/80 hover:bg-[#00ff66]/10 border border-[#1a2c1a] hover:border-[#00ff66]/60 rounded-xl text-center transition-all group"
                   >
-                    <Sparkles className="w-5 h-5 text-cyan-400 mb-1 group-hover:scale-110 transition-transform" />
-                    <span className="text-xs font-medium text-white">AI Search</span>
+                    <Sparkles className="w-5 h-5 text-[#00ff66] mb-1.5 group-hover:scale-110 transition-transform" />
+                    <span className="text-xs font-semibold text-white group-hover:text-[#00ff66]">AI Search</span>
                   </a>
 
                   <a
                     href="/demo-dev/codesphere-core/arch"
-                    className="flex flex-col items-center justify-center p-3 bg-[#161b22]/80 hover:bg-[#21262d] border border-[#30363d] rounded-xl text-center transition-all group"
+                    className="flex flex-col items-center justify-center p-3.5 bg-[#000000]/80 hover:bg-[#00ff66]/10 border border-[#1a2c1a] hover:border-[#00ff66]/60 rounded-xl text-center transition-all group"
                   >
-                    <Network className="w-5 h-5 text-indigo-400 mb-1 group-hover:scale-110 transition-transform" />
-                    <span className="text-xs font-medium text-white">Arch Map</span>
+                    <Network className="w-5 h-5 text-[#00ff66] mb-1.5 group-hover:scale-110 transition-transform" />
+                    <span className="text-xs font-semibold text-white group-hover:text-[#00ff66]">Arch Map</span>
                   </a>
 
                   <a
                     href="/demo-dev/codesphere-core/edit/main/README.md"
-                    className="flex flex-col items-center justify-center p-3 bg-[#161b22]/80 hover:bg-[#21262d] border border-[#30363d] rounded-xl text-center transition-all group"
+                    className="flex flex-col items-center justify-center p-3.5 bg-[#000000]/80 hover:bg-[#00ff66]/10 border border-[#1a2c1a] hover:border-[#00ff66]/60 rounded-xl text-center transition-all group"
                   >
-                    <Terminal className="w-5 h-5 text-emerald-400 mb-1 group-hover:scale-110 transition-transform" />
-                    <span className="text-xs font-medium text-white">Web IDE</span>
+                    <Terminal className="w-5 h-5 text-[#00ff66] mb-1.5 group-hover:scale-110 transition-transform" />
+                    <span className="text-xs font-semibold text-white group-hover:text-[#00ff66]">Web IDE</span>
                   </a>
 
                   <a
                     href="/demo-dev/portfolio"
-                    className="flex flex-col items-center justify-center p-3 bg-[#161b22]/80 hover:bg-[#21262d] border border-[#30363d] rounded-xl text-center transition-all group"
+                    className="flex flex-col items-center justify-center p-3.5 bg-[#000000]/80 hover:bg-[#00ff66]/10 border border-[#1a2c1a] hover:border-[#00ff66]/60 rounded-xl text-center transition-all group"
                   >
-                    <User className="w-5 h-5 text-purple-400 mb-1 group-hover:scale-110 transition-transform" />
-                    <span className="text-xs font-medium text-white">Portfolio</span>
+                    <User className="w-5 h-5 text-[#00ff66] mb-1.5 group-hover:scale-110 transition-transform" />
+                    <span className="text-xs font-semibold text-white group-hover:text-[#00ff66]">Portfolio</span>
                   </a>
                 </div>
               </div>
-            </div>
+            </GsapGlowCard>
 
             {/* Activity Feed */}
             <div className="space-y-3">
-              <h2 className="font-bold text-base text-white flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-cyan-400" />
-                <span>Recent Platform Activity</span>
+              <h2 className="font-bold text-base text-white flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <TrendingUp className="w-4 h-4 text-[#00ff66]" />
+                  <span>Real-Time Platform Activity</span>
+                </span>
+                <GsapPulseBeacon size={8} color="#00ff66" label="STREAMING" />
               </h2>
 
-              <div className="space-y-3">
+              <GsapStagger className="space-y-3">
                 {/* Activity 1 */}
-                <div className="p-4 bg-[#161b22] border border-[#30363d] rounded-xl space-y-2">
+                <div className="p-4 bg-[#040604] border border-[#1a2c1a] hover:border-[#00ff66]/40 rounded-xl space-y-2 transition-all">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-white">Alex Rivera (demo-dev)</span>
-                    <span className="text-[#8b949e]">2 hours ago</span>
+                    <span className="font-semibold text-white flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#00ff66]" />
+                      Alex Rivera (@demo-dev)
+                    </span>
+                    <span className="text-[#86a686] font-mono">Just now</span>
                   </div>
-                  <p className="text-xs text-[#c9d1d9]">
-                    Opened pull request <a href="/demo-dev/codesphere-core/pull/1" className="text-indigo-400 hover:underline font-semibold">#1: Integrate AI Repository Brain AST Service</a> in <code className="text-cyan-400">demo-dev/codesphere-core</code>
+                  <p className="text-xs text-[#c2d6c2]">
+                    Opened pull request <a href="/demo-dev/codesphere-core/pull/1" className="text-[#00ff66] hover:underline font-semibold">#1: Integrate AI Repository Brain AST Service</a> in <code className="text-[#4ade80] font-mono">demo-dev/codesphere-core</code>
                   </p>
-                  <div className="flex items-center gap-2 text-[11px] text-[#8b949e]">
-                    <span className="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-500/30">LOW RISK (15/100)</span>
+                  <div className="flex items-center gap-2 text-[11px] text-[#86a686] font-mono">
+                    <span className="px-2 py-0.5 rounded-full bg-[#00ff66]/10 text-[#00ff66] border border-[#00ff66]/30">LOW RISK (15/100)</span>
                     <span>1 file changed (+7 lines)</span>
                   </div>
                 </div>
 
                 {/* Activity 2 */}
-                <div className="p-4 bg-[#161b22] border border-[#30363d] rounded-xl space-y-2">
+                <div className="p-4 bg-[#040604] border border-[#1a2c1a] hover:border-[#00ff66]/40 rounded-xl space-y-2 transition-all">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-white">CI/CD Automation Engine</span>
-                    <span className="text-[#8b949e]">3 hours ago</span>
+                    <span className="font-semibold text-white flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#00ff66]" />
+                      Git Smart HTTP Daemon
+                    </span>
+                    <span className="text-[#86a686] font-mono">2m ago</span>
                   </div>
-                  <p className="text-xs text-[#c9d1d9]">
-                    Workflow run passed for commit <code className="text-indigo-300 font-mono">e9b2c34</code> on branch <code className="text-cyan-400 font-mono">main</code>
+                  <p className="text-xs text-[#c2d6c2]">
+                    Verified native Git push for commit <code className="text-[#00ff66] font-mono">4f74107</code> authenticated via Personal Access Token.
                   </p>
-                  <div className="flex items-center gap-2 text-[11px] text-emerald-400 font-semibold">
+                  <div className="flex items-center gap-2 text-[11px] text-[#00ff66] font-semibold font-mono">
                     <CheckCircle className="w-3.5 h-3.5" />
-                    <span>Build & Quality Gate: 3/3 Steps Passed (16s)</span>
+                    <span>Post-Push CI Pipeline Triggered</span>
                   </div>
                 </div>
-              </div>
+              </GsapStagger>
             </div>
           </div>
 
           {/* Right Column: Trending & Quick Commands */}
           <div className="lg:col-span-1 space-y-6">
             {/* Quick Git Terminal Command */}
-            <div className="bg-[#161b22] border border-[#30363d] rounded-xl p-4 space-y-3">
+            <GsapGlowCard className="p-4 space-y-3 border-[#1a2c1a]">
               <div className="flex items-center gap-2 text-xs font-bold text-white">
-                <Terminal className="w-4 h-4 text-emerald-400" />
-                <span>Quick Git Clone</span>
+                <Terminal className="w-4 h-4 text-[#00ff66]" />
+                <span>Git Smart HTTP Terminal</span>
               </div>
-              <p className="text-[11px] text-[#8b949e]">
-                Clone directly via standard Git CLI using HTTP Smart Protocol:
+              <p className="text-[11px] text-[#86a686]">
+                Clone directly via native Git CLI using standard Smart HTTP protocol:
               </p>
-              <div className="p-2.5 bg-[#0d1117] border border-[#30363d] rounded-lg font-mono text-[11px] text-cyan-300 overflow-x-auto select-all">
+              <div className="p-2.5 bg-[#000000] border border-[#1a2c1a] rounded-lg font-mono text-[11px] text-[#00ff66] overflow-x-auto select-all shadow-inner">
                 git clone http://localhost:4000/git/demo-dev/codesphere-core.git
               </div>
-            </div>
+            </GsapGlowCard>
 
             {/* Security Status */}
-            <div className="bg-[#161b22] border border-[#30363d] rounded-xl p-4 space-y-3">
+            <GsapGlowCard className="p-4 space-y-3 border-[#1a2c1a]">
               <div className="flex items-center gap-2 text-xs font-bold text-white">
-                <ShieldCheck className="w-4 h-4 text-cyan-400" />
-                <span>CodeSphere Security Gate</span>
+                <ShieldCheck className="w-4 h-4 text-[#00ff66]" />
+                <span>Autonomous Security Gate</span>
               </div>
-              <div className="text-xs text-[#8b949e] space-y-2">
+              <div className="text-xs text-[#86a686] font-mono space-y-2">
                 <div className="flex items-center justify-between">
                   <span>Secret Leaks:</span>
-                  <span className="text-emerald-400 font-semibold">0 Detected</span>
+                  <span className="text-[#00ff66] font-bold">0 Detected</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span>CVE Vulnerabilities:</span>
-                  <span className="text-emerald-400 font-semibold">Clean (0)</span>
+                  <span className="text-[#00ff66] font-bold">0 Clean</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span>Security Score:</span>
-                  <span className="text-cyan-400 font-bold">100 / 100</span>
+                  <span>Security Audit:</span>
+                  <span className="text-[#00ff66] font-bold">Passed (100%)</span>
                 </div>
               </div>
-            </div>
+            </GsapGlowCard>
           </div>
         </div>
       </main>

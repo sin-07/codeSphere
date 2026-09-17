@@ -64,54 +64,54 @@ export function RepoHeader({
   ];
 
   return (
-    <div className="bg-[#161b22] border-b border-[#30363d] pt-6 px-4 md:px-8">
+    <div className="bg-[#000000] border-b border-[#1a2c1a] pt-6 px-4 md:px-8 relative z-20">
       <div className="max-w-7xl mx-auto">
         {/* Top bar: Repo path & action buttons */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-5">
           <div className="flex items-center gap-2.5 text-lg font-semibold">
-            <BookOpen className="w-5 h-5 text-[#8b949e]" />
-            <a href={`/${owner}`} className="text-indigo-400 hover:underline">
+            <BookOpen className="w-5 h-5 text-[#86a686]" />
+            <a href={`/${owner}`} className="text-[#00ff66] hover:underline font-mono">
               {owner}
             </a>
-            <span className="text-[#8b949e]">/</span>
-            <a href={`/${owner}/${repo}`} className="text-white hover:underline">
+            <span className="text-[#86a686]">/</span>
+            <a href={`/${owner}/${repo}`} className="text-white hover:text-[#00ff66] transition-colors font-mono">
               {repo}
             </a>
-            <span className="ml-2 inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded-full bg-[#21262d] text-[#8b949e] border border-[#30363d]">
-              {isPrivate ? <Lock className="w-3 h-3 text-amber-400" /> : <Globe className="w-3 h-3 text-cyan-400" />}
+            <span className="ml-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 text-xs font-mono font-semibold rounded-full bg-[#040604] text-[#00ff66] border border-[#00ff66]/30 shadow-[0_0_10px_rgba(0,255,102,0.15)]">
+              {isPrivate ? <Lock className="w-3 h-3 text-[#00ff66]" /> : <Globe className="w-3 h-3 text-[#00ff66]" />}
               {isPrivate ? 'Private' : 'Public'}
             </span>
           </div>
 
           <div className="flex items-center gap-2">
             {/* Watch */}
-            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#30363d] text-xs font-semibold text-white rounded-md transition-colors">
-              <Eye className="w-3.5 h-3.5 text-[#8b949e]" />
+            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#040604] hover:bg-[#080c08] border border-[#1a2c1a] hover:border-[#00ff66]/40 text-xs font-semibold text-[#c2d6c2] hover:text-white rounded-lg transition-all">
+              <Eye className="w-3.5 h-3.5 text-[#86a686]" />
               <span>Watch</span>
             </button>
 
             {/* Fork */}
             <a
               href={`/${owner}/${repo}/fork`}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#21262d] hover:bg-[#30363d] border border-[#30363d] text-xs font-semibold text-white rounded-md transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#040604] hover:bg-[#080c08] border border-[#1a2c1a] hover:border-[#00ff66]/40 text-xs font-semibold text-[#c2d6c2] hover:text-white rounded-lg transition-all"
             >
-              <GitFork className="w-3.5 h-3.5 text-[#8b949e]" />
+              <GitFork className="w-3.5 h-3.5 text-[#86a686]" />
               <span>Fork</span>
-              <span className="ml-1 px-1.5 py-0.2 bg-[#161b22] rounded-full text-[#8b949e]">{forksCount}</span>
+              <span className="ml-1 px-1.5 py-0.2 bg-[#000000] border border-[#1a2c1a] rounded-full text-[#86a686] font-mono">{forksCount}</span>
             </a>
 
             {/* Star */}
             <button
               onClick={handleStar}
-              className={`flex items-center gap-1.5 px-3 py-1.5 border text-xs font-semibold rounded-md transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 border text-xs font-semibold rounded-lg transition-all ${
                 starred
-                  ? 'bg-amber-500/20 text-amber-300 border-amber-500/50'
-                  : 'bg-[#21262d] hover:bg-[#30363d] border-[#30363d] text-white'
+                  ? 'bg-[#00ff66]/20 text-[#00ff66] border-[#00ff66] shadow-[0_0_15px_rgba(0,255,102,0.4)]'
+                  : 'bg-[#040604] hover:bg-[#080c08] border-[#1a2c1a] hover:border-[#00ff66]/40 text-white'
               }`}
             >
-              <Star className={`w-3.5 h-3.5 ${starred ? 'fill-amber-400 text-amber-400' : 'text-[#8b949e]'}`} />
+              <Star className={`w-3.5 h-3.5 ${starred ? 'fill-[#00ff66] text-[#00ff66]' : 'text-[#86a686]'}`} />
               <span>{starred ? 'Starred' : 'Star'}</span>
-              <span className="ml-1 px-1.5 py-0.2 bg-[#161b22] rounded-full text-[#8b949e]">{stars}</span>
+              <span className="ml-1 px-1.5 py-0.2 bg-[#000000] border border-[#1a2c1a] rounded-full text-[#86a686] font-mono">{stars}</span>
             </button>
           </div>
         </div>
@@ -127,19 +127,19 @@ export function RepoHeader({
                 href={tab.href}
                 className={`flex items-center gap-2 px-3.5 py-2.5 text-sm font-medium border-b-2 whitespace-nowrap transition-all ${
                   isActive
-                    ? 'border-[#f78166] text-white font-semibold'
-                    : 'border-transparent text-[#8b949e] hover:text-[#c9d1d9] hover:border-[#8b949e]/40'
-                } ${tab.highlight ? 'text-cyan-400 hover:text-cyan-300' : ''}`}
+                    ? 'border-[#00ff66] text-[#00ff66] font-semibold shadow-[0_2px_10px_rgba(0,255,102,0.4)]'
+                    : 'border-transparent text-[#86a686] hover:text-[#c2d6c2] hover:border-[#00ff66]/30'
+                } ${tab.highlight ? 'text-[#4ade80] hover:text-[#00ff66]' : ''}`}
               >
-                <Icon className={`w-4 h-4 ${tab.highlight ? 'text-cyan-400' : ''}`} />
+                <Icon className={`w-4 h-4 ${tab.highlight ? 'text-[#00ff66]' : ''}`} />
                 <span>{tab.label}</span>
                 {tab.badge && (
-                  <span className="px-1.5 py-0.2 text-xs font-semibold rounded-full bg-[#30363d] text-[#c9d1d9]">
+                  <span className="px-1.5 py-0.2 text-[11px] font-mono font-semibold rounded-full bg-[#131f13] text-[#00ff66] border border-[#1a2c1a]">
                     {tab.badge}
                   </span>
                 )}
                 {tab.highlight && !isActive && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00ff66] shadow-[0_0_6px_#00ff66] animate-pulse" />
                 )}
               </a>
             );
