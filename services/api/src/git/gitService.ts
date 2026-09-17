@@ -249,20 +249,21 @@ export class GitService {
     const repoPath = this.getRepoPath(owner, name);
     await this.initBareRepo(owner, name, branch);
 
-    // Create temporary worktree to make commit cleanly
     const tempDir = path.join(os.tmpdir(), `codesphere-commit-${Date.now()}-${Math.random().toString(36).substring(7)}`);
     fs.mkdirSync(tempDir, { recursive: true });
 
     try {
-      // Check if branch exists
       const branches = await this.getBranches(owner, name);
       const branchExists = branches.includes(branch);
 
       if (branchExists) {
-        await execAsync(`git worktree add "${tempDir}" "${branch}"`, { cwd: repoPath });
+        // Clone existing branch with depth 1
+        await execAsync(`git clone --depth 1 --branch "${branch}" "${repoPath}" "${tempDir}"`);
       } else {
-        // Create orphan or initial branch
-        await execAsync(`git worktree add -b "${branch}" "${tempDir}"`, { cwd: repoPath });
+        // Initialize fresh repository for new branch
+        await execAsync(`git init`, { cwd: tempDir });
+        await execAsync(`git branch -M "${branch}"`, { cwd: tempDir });
+        await execAsync(`git remote add origin "${repoPath}"`, { cwd: tempDir });
       }
 
       // Write files
@@ -283,12 +284,11 @@ export class GitService {
         { cwd: tempDir }
       );
 
-      const { stdout: revOut } = await execAsync(`git rev-parse HEAD`, { cwd: tempDir });
-      const sha = revOut.trim();
+      // Push back to bare repo
+      await execAsync(`git push origin "${branch}"`, { cwd: tempDir });
 
-      // Clean up worktree
-      await execAsync(`git worktree remove --force "${tempDir}"`, { cwd: repoPath }).catch(() => {});
-      return sha;
+      const { stdout: revOut } = await execAsync(`git rev-parse HEAD`, { cwd: tempDir });
+      return revOut.trim();
     } finally {
       if (fs.existsSync(tempDir)) {
         fs.rmSync(tempDir, { recursive: true, force: true });
