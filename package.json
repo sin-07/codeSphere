@@ -1,0 +1,19 @@
+{
+  "name": "codesphere-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "services/api"
+  ],
+  "scripts": {
+    "dev": "concurrently \"yarn --cwd services/api dev\" \"yarn --cwd apps/web dev\"",
+    "build": "yarn --cwd services/api build && yarn --cwd apps/web build",
+    "start": "concurrently \"yarn --cwd services/api start\" \"yarn --cwd apps/web start\"",
+    "test": "yarn --cwd services/api test",
+    "seed": "yarn --cwd services/api seed"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
