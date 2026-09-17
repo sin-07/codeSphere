@@ -1,7 +1,11 @@
 import path from 'path';
 import dotenv from 'dotenv';
+import fs from 'fs';
 
 dotenv.config();
+dotenv.config({ path: path.resolve(process.cwd(), '.env') });
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 function getStoragePath(): string {
   if (process.env.STORAGE_REPOS_PATH) return path.resolve(process.env.STORAGE_REPOS_PATH);
@@ -15,8 +19,6 @@ function getStoragePath(): string {
   }
   return path.resolve(process.cwd(), 'storage/repos');
 }
-
-import fs from 'fs';
 
 export const CONFIG = {
   PORT: parseInt(process.env.PORT || '4000', 10),

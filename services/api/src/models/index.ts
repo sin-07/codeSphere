@@ -23,6 +23,7 @@ export interface IUser {
 }
 
 const UserSchema = new Schema<IUser>({
+  _id: { type: String, default: uuidv4 },
   username: { type: String, required: true, unique: true, index: true },
   email: { type: String, required: true, unique: true, index: true },
   passwordHash: { type: String, required: true },
@@ -60,6 +61,7 @@ export interface IRepository {
 }
 
 const RepositorySchema = new Schema<IRepository>({
+  _id: { type: String, default: uuidv4 },
   owner: { type: String, required: true, index: true },
   name: { type: String, required: true },
   slug: { type: String, required: true, unique: true, index: true },
@@ -97,6 +99,7 @@ export interface IPullRequest {
 }
 
 const PullRequestSchema = new Schema<IPullRequest>({
+  _id: { type: String, default: uuidv4 },
   repoSlug: { type: String, required: true, index: true },
   number: { type: Number, required: true },
   title: { type: String, required: true },
@@ -139,6 +142,7 @@ export interface IIssue {
 }
 
 const IssueSchema = new Schema<IIssue>({
+  _id: { type: String, default: uuidv4 },
   repoSlug: { type: String, required: true, index: true },
   number: { type: Number, required: true },
   title: { type: String, required: true },
@@ -168,6 +172,7 @@ export interface IComment {
 }
 
 const CommentSchema = new Schema<IComment>({
+  _id: { type: String, default: uuidv4 },
   repoSlug: { type: String, required: true, index: true },
   entityType: { type: String, enum: ['issue', 'pr', 'commit'], required: true },
   entityNumberOrSha: { type: String, required: true },
@@ -196,6 +201,7 @@ export interface IRelease {
 }
 
 const ReleaseSchema = new Schema<IRelease>({
+  _id: { type: String, default: uuidv4 },
   repoSlug: { type: String, required: true, index: true },
   tagName: { type: String, required: true },
   name: { type: String, required: true },
@@ -226,6 +232,7 @@ export interface IOrganization {
 }
 
 const OrganizationSchema = new Schema<IOrganization>({
+  _id: { type: String, default: uuidv4 },
   name: { type: String, required: true },
   slug: { type: String, required: true, unique: true, index: true },
   description: { type: String, default: '' },
@@ -267,6 +274,7 @@ export interface ICIPipelineRun {
 }
 
 const CIPipelineRunSchema = new Schema<ICIPipelineRun>({
+  _id: { type: String, default: uuidv4 },
   repoSlug: { type: String, required: true, index: true },
   commitSha: { type: String, required: true },
   commitMessage: { type: String, default: '' },
@@ -303,6 +311,7 @@ export interface IAuditLog {
 }
 
 const AuditLogSchema = new Schema<IAuditLog>({
+  _id: { type: String, default: uuidv4 },
   actor: { type: String, required: true, index: true },
   ipAddress: { type: String, default: '127.0.0.1' },
   action: { type: String, required: true },
@@ -326,6 +335,7 @@ export interface INotification {
 }
 
 const NotificationSchema = new Schema<INotification>({
+  _id: { type: String, default: uuidv4 },
   recipient: { type: String, required: true, index: true },
   actor: { type: String, required: true },
   type: { type: String, enum: ['pr_review', 'mention', 'issue_assigned', 'ci_completed'], required: true },
@@ -404,7 +414,7 @@ export class DataService {
         const created = await model.create(docData);
         return created.toObject();
       } catch (err) {
-        // Fallback
+        console.error(`[DataService] Error creating in ${collection}:`, err);
       }
     }
     const docs = getLocalCollection(collection);
@@ -419,7 +429,7 @@ export class DataService {
         await model.updateOne(filter, update);
         return true;
       } catch (err) {
-        // Fallback
+        console.error(`[DataService] Error updating in ${collection}:`, err);
       }
     }
     const docs = getLocalCollection(collection);

@@ -62,6 +62,9 @@ export class GitService {
       await execAsync(`git branch ${branchName} ${startPoint}`, { cwd: repoPath });
       return true;
     } catch (err: any) {
+      if (err.message?.includes('already exists') || err.stderr?.includes('already exists')) {
+        return true;
+      }
       throw new Error(`Failed to create branch ${branchName}: ${err.message}`);
     }
   }
@@ -279,13 +282,19 @@ export class GitService {
 
       // Git add and commit
       await execAsync(`git add -A`, { cwd: tempDir });
-      await execAsync(
-        `git -c user.name="${authorName}" -c user.email="${authorEmail}" commit -m "${commitMessage.replace(/"/g, '\\"')}"`,
-        { cwd: tempDir }
-      );
-
-      // Push back to bare repo
-      await execAsync(`git push origin "${branch}"`, { cwd: tempDir });
+      try {
+        await execAsync(
+          `git -c user.name="${authorName}" -c user.email="${authorEmail}" commit -m "${commitMessage.replace(/"/g, '\\"')}"`,
+          { cwd: tempDir }
+        );
+        // Push back to bare repo
+        await execAsync(`git push origin "${branch}"`, { cwd: tempDir });
+      } catch (err: any) {
+        const fullErr = (err.message || '') + ' ' + (err.stdout || '') + ' ' + (err.stderr || '');
+        if (!fullErr.includes('nothing to commit')) {
+          throw err;
+        }
+      }
 
       const { stdout: revOut } = await execAsync(`git rev-parse HEAD`, { cwd: tempDir });
       return revOut.trim();

@@ -15,25 +15,39 @@ function packetLine(str: string): string {
 async function authenticateGitUser(req: Request): Promise<{ authenticated: boolean; user?: any }> {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Basic ')) {
+    console.log('[Git Auth] Missing or non-basic auth header:', authHeader);
     return { authenticated: false };
   }
 
   const base64Credentials = authHeader.split(' ')[1];
   const decoded = Buffer.from(base64Credentials, 'base64').toString('utf-8');
-  const [username, passwordOrToken] = decoded.split(':');
+  const colonIndex = decoded.indexOf(':');
+  const username = colonIndex !== -1 ? decoded.slice(0, colonIndex) : decoded;
+  const passwordOrToken = colonIndex !== -1 ? decoded.slice(colonIndex + 1) : '';
 
-  if (!username || !passwordOrToken) return { authenticated: false };
+  console.log('[Git Auth] Decoded credentials:', { username, tokenPrefix: passwordOrToken.substring(0, 4) });
+
+  // If token is provided as username (common in CI/CD environments)
+  if (username.startsWith('pat_')) {
+    const tokenUser = await DataService.findOne<any>('users', UserModel, { 'personalAccessTokens.token': username });
+    if (tokenUser) return { authenticated: true, user: tokenUser };
+  }
 
   const user = await DataService.findOne<any>('users', UserModel, { username });
-  if (!user) return { authenticated: false };
+  if (!user) {
+    console.log('[Git Auth] User not found for username:', username);
+    return { authenticated: false };
+  }
 
   // Check personal access tokens first
   if (user.personalAccessTokens && user.personalAccessTokens.some((pat: any) => pat.token === passwordOrToken)) {
+    console.log('[Git Auth] PAT matched for user:', username);
     return { authenticated: true, user };
   }
 
   // Check password hash
   const isValid = await bcrypt.compare(passwordOrToken, user.passwordHash).catch(() => false);
+  console.log('[Git Auth] bcrypt.compare result:', isValid);
   if (isValid) {
     return { authenticated: true, user };
   }

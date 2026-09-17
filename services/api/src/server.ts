@@ -100,9 +100,24 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
   res.status(500).json({ error: err.message || 'Internal Server Error' });
 });
 
+import { seedDatabase } from './seed';
+import { DataService, UserModel } from './models';
+
 // Start Server
 export async function startServer() {
   await connectDB();
+
+  // Auto-seed demo data if database is unseeded
+  try {
+    const userCount = await DataService.count('users', UserModel);
+    if (userCount === 0) {
+      console.log('[Server] Database is empty. Running initial demo seed...');
+      await seedDatabase();
+    }
+  } catch (err) {
+    console.warn('[Server] Auto-seed check skipped or failed:', err);
+  }
+
   server.listen(CONFIG.PORT, () => {
     console.log(`===================================================`);
     console.log(`🚀 CodeSphere API Server running on port ${CONFIG.PORT}`);
