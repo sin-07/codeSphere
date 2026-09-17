@@ -50,9 +50,9 @@ export class GitService {
     try {
       const { stdout } = await execAsync(`git for-each-ref --format="%(refname:short)" refs/heads/`, { cwd: repoPath });
       const branches = stdout.split('\n').map(b => b.trim()).filter(Boolean);
-      return branches.length ? branches : ['main'];
+      return branches;
     } catch {
-      return ['main'];
+      return [];
     }
   }
 
@@ -311,7 +311,8 @@ export class GitService {
     fs.mkdirSync(tempDir, { recursive: true });
 
     try {
-      await execAsync(`git worktree add "${tempDir}" "${base}"`, { cwd: repoPath });
+      await execAsync(`git clone --branch "${base}" "${repoPath}" "${tempDir}"`);
+      await execAsync(`git fetch origin "${head}:${head}"`, { cwd: tempDir });
 
       if (strategy === 'squash') {
         await execAsync(`git merge --squash "${head}"`, { cwd: tempDir });
@@ -326,11 +327,9 @@ export class GitService {
         );
       }
 
+      await execAsync(`git push origin "${base}"`, { cwd: tempDir });
       const { stdout: revOut } = await execAsync(`git rev-parse HEAD`, { cwd: tempDir });
-      const sha = revOut.trim();
-
-      await execAsync(`git worktree remove --force "${tempDir}"`, { cwd: repoPath }).catch(() => {});
-      return sha;
+      return revOut.trim();
     } finally {
       if (fs.existsSync(tempDir)) {
         fs.rmSync(tempDir, { recursive: true, force: true });
