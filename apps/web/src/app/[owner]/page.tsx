@@ -20,15 +20,15 @@ import { fetchUserProfile } from '@/lib/api';
 
 export default function UserProfilePage() {
   const params = useParams();
-  const username = params.username as string;
+  const owner = params.owner as string;
 
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!username) return;
+    if (!owner) return;
 
-    fetchUserProfile(username)
+    fetchUserProfile(owner)
       .then(setProfile)
       .catch(() => {
         // Fallback realistic demo profile
@@ -44,7 +44,7 @@ export default function UserProfilePage() {
         }
 
         setProfile({
-          username,
+          username: owner,
           name: 'Alex Rivera',
           avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
           bio: 'Principal Systems Architect & Open Source Maintainer. Building the future of AI-driven developer platforms.',
@@ -53,7 +53,7 @@ export default function UserProfilePage() {
           website: 'https://codesphere.dev',
           repositories: [
             {
-              slug: `${username}/codesphere-core`,
+              slug: `${owner}/codesphere-core`,
               name: 'codesphere-core',
               description: 'Distributed Git engine and developer intelligence platform with real HTTP protocol.',
               language: 'TypeScript',
@@ -61,7 +61,7 @@ export default function UserProfilePage() {
               forksCount: 18
             },
             {
-              slug: `${username}/ai-agent-nexus`,
+              slug: `${owner}/ai-agent-nexus`,
               name: 'ai-agent-nexus',
               description: 'Autonomous multi-agent orchestration framework for automated repository refactoring.',
               language: 'Python',
@@ -78,7 +78,7 @@ export default function UserProfilePage() {
         });
       })
       .finally(() => setLoading(false));
-  }, [username]);
+  }, [owner]);
 
   return (
     <div className="min-h-screen bg-[#0d1117] flex flex-col">
@@ -91,7 +91,7 @@ export default function UserProfilePage() {
             <div className="relative">
               <img
                 src={profile?.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150'}
-                alt={username}
+                alt={owner}
                 className="w-48 h-48 rounded-full border-2 border-cyan-400/50 shadow-2xl object-cover"
               />
               <div className="absolute bottom-2 right-6 p-1.5 bg-[#161b22] border border-[#30363d] rounded-full text-cyan-400" title="Pro Maintainer">
@@ -100,8 +100,8 @@ export default function UserProfilePage() {
             </div>
 
             <div className="space-y-1">
-              <h1 className="text-xl font-bold text-white">{profile?.name || username}</h1>
-              <p className="text-sm font-mono text-[#8b949e]">@{username}</p>
+              <h1 className="text-xl font-bold text-white">{profile?.name || owner}</h1>
+              <p className="text-sm font-mono text-[#8b949e]">@{owner}</p>
             </div>
 
             <p className="text-xs text-[#c9d1d9] leading-relaxed">
@@ -109,7 +109,7 @@ export default function UserProfilePage() {
             </p>
 
             <a
-              href={`/${username}/portfolio`}
+              href={`/${owner}/portfolio`}
               className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white text-xs font-semibold rounded-lg shadow-lg shadow-indigo-500/20 transition-all"
             >
               <span>View Auto-Generated Portfolio</span>

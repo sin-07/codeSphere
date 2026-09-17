@@ -37,7 +37,7 @@ router.post('/register', async (req, res) => {
     });
 
     const token = jwt.sign({ id: user._id, username: user.username, email: user.email, role: user.role }, CONFIG.JWT_SECRET, {
-      expiresIn: CONFIG.JWT_EXPIRES_IN
+      expiresIn: CONFIG.JWT_EXPIRES_IN as any
     });
 
     await DataService.create('auditlogs', AuditLogModel, {
@@ -75,7 +75,7 @@ router.post('/login', async (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id, username: user.username, email: user.email, role: user.role }, CONFIG.JWT_SECRET, {
-      expiresIn: CONFIG.JWT_EXPIRES_IN
+      expiresIn: CONFIG.JWT_EXPIRES_IN as any
     });
 
     res.json({ token, user: { id: user._id, username: user.username, email: user.email, name: user.name, avatarUrl: user.avatarUrl, bio: user.bio, role: user.role } });

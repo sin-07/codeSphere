@@ -20,22 +20,22 @@ import { fetchUserPortfolio } from '@/lib/api';
 
 export default function DeveloperPortfolioPage() {
   const params = useParams();
-  const username = params.username as string;
+  const owner = params.owner as string;
 
   const [portfolio, setPortfolio] = useState<any>(null);
   const [copied, setCopied] = useState(false);
   const [theme, setTheme] = useState<'midnight' | 'cyber' | 'emerald'>('midnight');
 
   useEffect(() => {
-    if (!username) return;
+    if (!owner) return;
 
-    fetchUserPortfolio(username)
+    fetchUserPortfolio(owner)
       .then(setPortfolio)
       .catch(() => {
         setPortfolio({
           developer: {
             name: 'Alex Rivera',
-            username,
+            username: owner,
             avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200',
             bio: 'Principal Systems Architect & Open Source Maintainer. Engineering high-throughput distributed systems and AI developer tools.',
             company: 'CodeSphere Labs',
@@ -52,21 +52,21 @@ export default function DeveloperPortfolioPage() {
           pinnedProjects: [
             {
               name: 'codesphere-core',
-              slug: `${username}/codesphere-core`,
+              slug: `${owner}/codesphere-core`,
               description: 'Distributed Git engine and developer intelligence platform with real HTTP protocol.',
               language: 'TypeScript',
               stars: 142,
               forks: 18,
-              demoUrl: `http://localhost:3000/${username}/codesphere-core`
+              demoUrl: `http://localhost:3000/${owner}/codesphere-core`
             },
             {
               name: 'ai-agent-nexus',
-              slug: `${username}/ai-agent-nexus`,
+              slug: `${owner}/ai-agent-nexus`,
               description: 'Autonomous multi-agent orchestration framework for automated repository refactoring.',
               language: 'Python',
               stars: 89,
               forks: 12,
-              demoUrl: `http://localhost:3000/${username}/ai-agent-nexus`
+              demoUrl: `http://localhost:3000/${owner}/ai-agent-nexus`
             }
           ],
           stats: {
@@ -77,7 +77,7 @@ export default function DeveloperPortfolioPage() {
           }
         });
       });
-  }, [username]);
+  }, [owner]);
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -138,7 +138,7 @@ export default function DeveloperPortfolioPage() {
         <div className="flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
           <img
             src={portfolio?.developer?.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200'}
-            alt={username}
+            alt={owner}
             className="w-36 h-36 rounded-2xl border-2 border-cyan-400/60 shadow-2xl object-cover"
           />
 
@@ -149,7 +149,7 @@ export default function DeveloperPortfolioPage() {
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-              {portfolio?.developer?.name || username}
+              {portfolio?.developer?.name || owner}
             </h1>
 
             <p className="text-base text-cyan-300 font-medium">
